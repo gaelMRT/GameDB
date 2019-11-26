@@ -1,0 +1,34 @@
+<template>
+    <div class="page">
+
+        
+    <!-- Top Navbar -->
+    <div class="navbar ">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="title-large-text">{{game.title}}</div>
+            </div>
+          </div>
+
+
+        <div class="page-content">
+            <div class="block block-strong">
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    export default {
+        data: function () {
+            var gameId = this.$route.params.id;
+            var currentGame;
+            this.$root.games.forEach(function (game) {
+                console.log(game);
+                if (game.id === gameId) {
+                    currentGame = game;
+                }
+            });
+            return { game: currentGame };
+        }
+    };
+</script>

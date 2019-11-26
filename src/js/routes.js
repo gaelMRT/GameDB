@@ -1,14 +1,14 @@
 
 import HomePage from '../pages/home.f7.html';
-import AboutPage from '../pages/about.f7.html';
-import FormPage from '../pages/form.f7.html';
-import CatalogPage from '../pages/catalog.f7.html';
-import ProductPage from '../pages/product.f7.html';
-import SettingsPage from '../pages/settings.f7.html';
-
-import DynamicRoutePage from '../pages/dynamic-route.f7.html';
-import RequestAndLoad from '../pages/request-and-load.f7.html';
 import NotFoundPage from '../pages/404.f7.html';
+
+import ActualGames from '../pages/actual-games.f7.html';
+import FollowedGames from '../pages/followed-games.f7.html';
+import GameInfo from '../pages/game.f7.html';
+import AllGames from '../pages/all-games.f7.html';
+import SearchResults from '../pages/search-results.f7.html';
+import Search from '../pages/search.f7.html';
+
 
 var routes = [
   {
@@ -16,79 +16,28 @@ var routes = [
     component: HomePage,
   },
   {
-    path: '/about/',
-    component: AboutPage,
+    path: '/actual-games/',
+    component: ActualGames,
   },
   {
-    path: '/form/',
-    component: FormPage,
+    path: '/all-games/',
+    component: AllGames,
   },
   {
-    path: '/catalog/',
-    component: CatalogPage,
+    path: '/followed-games/',
+    component: FollowedGames,
   },
   {
-    path: '/product/:id/',
-    component: ProductPage,
+    path: '/game/:id/',
+    component: GameInfo,
   },
   {
-    path: '/settings/',
-    component: SettingsPage,
-  },
-
-  {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    component: DynamicRoutePage,
+    path: '/search/:search/',
+    component: SearchResults,
   },
   {
-    path: '/request-and-load/user/:userId/',
-    async: function (routeTo, routeFrom, resolve, reject) {
-      // Router instance
-      var router = this;
-
-      // App instance
-      var app = router.app;
-
-      // Show Preloader
-      app.preloader.show();
-
-      // User ID from request
-      var userId = routeTo.params.userId;
-
-      // Simulate Ajax Request
-      setTimeout(function () {
-        // We got user data from request
-        var user = {
-          firstName: 'Vladimir',
-          lastName: 'Kharlampidi',
-          about: 'Hello, i am creator of Framework7! Hope you like it!',
-          links: [
-            {
-              title: 'Framework7 Website',
-              url: 'http://framework7.io',
-            },
-            {
-              title: 'Framework7 Forum',
-              url: 'http://forum.framework7.io',
-            },
-          ]
-        };
-        // Hide Preloader
-        app.preloader.hide();
-
-        // Resolve route to load page
-        resolve(
-          {
-            component: RequestAndLoad,
-          },
-          {
-            context: {
-              user: user,
-            }
-          }
-        );
-      }, 1000);
-    },
+    path: '/search/',
+    component: Search,
   },
   {
     path: '(.*)',

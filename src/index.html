@@ -25,59 +25,38 @@
   <!-- built styles file will be auto injected -->
 </head>
 <body>
+  
   <div id="app">
-    <!-- Left panel with cover effect-->
-    <div class="panel panel-left panel-cover theme-dark panel-init">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Left Panel</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">Left panel content goes here</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Right panel with reveal effect-->
-    <div class="panel panel-right panel-reveal theme-dark">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Right Panel</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">Right panel content goes here</div>
-          </div>
-        </div>
-      </div>
-    </div>
     
     <!-- Views/Tabs container -->
     <div class="views tabs safe-areas">
       <!-- Tabbar for switching views-tabs -->
       <div class="toolbar toolbar-bottom tabbar-labels">
         <div class="toolbar-inner">
+          <a href="#view-all" class="tab-link">
+            <i class="icon f7-icons if-not-md">square_list_fill</i>
+            <i class="icon material-icons if-md">view_list</i>
+            <span class="tabbar-label">All</span>
+          </a>
+          <a href="#view-actual" class="tab-link">
+            <i class="icon f7-icons if-not-md">square_list_fill</i>
+            <i class="icon material-icons if-md">view_list</i>
+            <span class="tabbar-label">Actual</span>
+          </a>
           <a href="#view-home" class="tab-link tab-link-active">
             <i class="icon f7-icons if-not-md">house_fill</i>
             <i class="icon material-icons if-md">home</i>
             <span class="tabbar-label">Home</span>
           </a>
-          <a href="#view-catalog" class="tab-link">
-            <i class="icon f7-icons if-not-md">square_list_fill</i>
-            <i class="icon material-icons if-md">view_list</i>
-            <span class="tabbar-label">Catalog</span>
+          <a href="#view-followed" class="tab-link">
+            <i class="icon f7-icons if-not-md">star</i>
+            <i class="icon material-icons if-md">star</i>
+            <span class="tabbar-label">Favorites</span>
           </a>
-          <a href="#view-settings" class="tab-link">
-            <i class="icon f7-icons if-not-md">gear</i>
-            <i class="icon material-icons if-md">settings</i>
-            <span class="tabbar-label">Settings</span>
+          <a href="#view-search" class="tab-link">
+            <i class="icon f7-icons if-not-md">search</i>
+            <i class="icon material-icons if-md">search</i>
+            <span class="tabbar-label">Search</span>
           </a>
         </div>
       </div>
@@ -87,15 +66,26 @@
         <!-- Home page will be loaded here dynamically from / route -->
       </div>
 
-      <!-- Catalog View -->
-      <div id="view-catalog" class="view view-init tab" data-view="catalog" data-url="/catalog/">
-        <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
+      <!-- All View -->
+      <div id="view-all" class="view view-init tab" data-view="all-games" data-url="/all-games/">
+        <!-- Catalog page will be loaded here dynamically from /all-games/ route -->
       </div>
 
-      <!-- Settings View -->
-      <div id="view-settings" class="view view-init tab" data-view="settings" data-url="/settings/">
-        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      <!-- Actual View -->
+      <div id="view-actual" class="view view-init tab" data-view="actual-games" data-url="/actual-games/">
+        <!-- Settings page will be loaded here dynamically from /actual-games/ route -->
       </div>
+      
+      <!-- Favorites View -->
+      <div id="view-followed" class="view view-init tab" data-view="followed-games" data-url="/followed-games/">
+        <!-- Settings page will be loaded here dynamically from /followed-games/ route -->
+      </div>
+
+      <!-- Search View -->
+      <div id="view-search" class="view view-init tab" data-view="search" data-url="/search/">
+        <!-- Settings page will be loaded here dynamically from /search/ route -->
+      </div>
+
     </div>
 
 
