@@ -18,7 +18,7 @@ import routes from './routes.js';
 
 var app = new Framework7({
   root: '#app', // App root element
-  id: 'cfpt.mrt.gamedb', // App bundle ID
+  idGame: 'cfpt.mrt.gamedb', // App bundle idGame
   name: 'GameDB', // App name
   theme: 'auto', // Automatic theme detection
   // App root data
@@ -28,51 +28,74 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
-
-      // Demo games for followed section
-      followedGames: [
-        {
-          id: '1',
-          title: 'Apple iPhone 8',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-        },
-        {
-          id: '2',
-          title: 'Apple iPhone 8 Plus',
-          description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-        },
-        {
-          id: '3',
-          title: 'Apple iPhone X',
-          description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-        },
-      ],
-
-      //Demo games for details
       games:[
-        {id:1,
-        }
+        {
+          idGame: 1,
+          nameGame: 'Jeu N°1',
+          platforms: 'PC, PS4',
+          genres:'Action, Adventure',
+          release:'05-10-2019',
+          rating:54.32,
+          popularity:5,
+          img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+          summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+          storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+        },
+        {
+          idGame: 2,
+          nameGame: 'Jeu N°2',
+          platforms: 'PC, PS4',
+          genres:'Action, Adventure',
+          release:'05-10-2019',
+          rating:54.32,
+          popularity:5,
+          img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+          summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+          storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+         },
+         {
+           idGame: 3,
+           nameGame: 'Jeu N°3',
+           platforms: 'PC, PS4',
+           genres:'Action, Adventure',
+           release:'05-10-2019',
+           rating:54.32,
+           popularity:5,
+           img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+           summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+           storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+         },
+         {
+           idGame: 6,
+           nameGame: 'Jeu N°6',
+           platforms: 'PC, PS4',
+           genres:'Action, Adventure',
+           release:'05-10-2019',
+           rating:54.32,
+           popularity:5,
+           img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+           summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+           storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+         },
+         {
+           idGame: 22,
+           nameGame: 'Jeu N°22',
+           platforms: 'PC, PS4',
+           genres:'Action, Adventure',
+           release:'05-10-2019',
+           rating:54.32,
+           popularity:5,
+           img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+           summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+           storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+         },
       ],
+      // Demo games for followed section
+      followedGames: [1,22,3,6],
+
       
       // Demo games for actual Section
-      actualGames: [
-        {
-          id: '22',
-          title: 'Jeu du kangourou',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-        },
-        {
-          id: '2',
-          title: 'Jeu du marsupial',
-          description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-        },
-        {
-          id: '3',
-          title: 'La chouette',
-          img:'',
-          description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-        },
-      ]
+      actualGames: [22,2,3]
     };
   },
   // App root methods
@@ -93,7 +116,7 @@ var app = new Framework7({
   // Cordova Statusbar settings
   statusbar: {
     iosOverlaysWebView: true,
-    androidOverlaysWebView: false,
+    androidGameOverlaysWebView: false,
   },
   on: {
     init: function () {
@@ -109,17 +132,17 @@ var app = new Framework7({
 var db = openDatabase('mrtGameDB','1.0','mrtGameDB',12*1024*1024);
 
 db.transaction(function (tx){
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGames (idGame INTEGER PRIMARY KEY, nameGame TEXT NOT NULL, summary TEXT NOT NULL, storyline TEXT,note DOUBLE,firstReleaseDate INTEGER);',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TFollowedGames (idFollowedGame INTEGER PRIMARY KEY)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGenres (idGenre INTEGER PRIMARY KEY,nameGenre TEXT NOT NULL)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TModes (idMode INTEGER PRIMARY KEY,nameMode TEXT NOT NULL)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TPlatforms (idPlatform INTEGER PRIMARY KEY, namePlatform TEXT NOT NULL)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TCompanies (idCompany INTEGER PRIMARY KEY, nameCompany TEXT NOT NULL)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TLastUpdated (idLastUpdate INTEGER PRIMARY KEY,tableName TEXT NOT NULL,lastUpdated INTEGER NOT NULL)',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameCompanies (idGame INTEGER,idCompany INTEGER,PRIMARY KEY(idGame,idCompany))',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameGenres (idGame INTEGER,idGenre INTEGER,PRIMARY KEY(idGame,idGenre))',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGamePlatforms (idGame INTEGER,idPlatforms INTEGER,PRIMARY KEY(idGame,idPlatforms))',null,null,errorCallback);
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameModes (idGameMode INTEGER,ids INTEGER,PRIMARY KEY(idGameMode,ids))',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGames (idGameGame INTEGER PRIMARY KEY, nameGame TEXT NOT NULL, summary TEXT NOT NULL, storyline TEXT, note DOUBLE, firstReleaseDate INTEGER);', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TFollowedGames (idGameFollowedGame INTEGER PRIMARY KEY)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGenres (idGameGenre INTEGER PRIMARY KEY, nameGenre TEXT NOT NULL)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TModes (idGameMode INTEGER PRIMARY KEY, nameMode TEXT NOT NULL)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TPlatforms (idGamePlatform INTEGER PRIMARY KEY, namePlatform TEXT NOT NULL)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TCompanies (idGameCompany INTEGER PRIMARY KEY, nameCompany TEXT NOT NULL)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TLastUpdated (idGameLastUpdate INTEGER PRIMARY KEY, tableName TEXT NOT NULL, lastUpdated INTEGER NOT NULL)', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameCompanies (idGameGame INTEGER, idGameCompany INTEGER, PRIMARY KEY(idGameGame, idGameCompany))', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameGenres (idGameGame INTEGER, idGameGenre INTEGER, PRIMARY KEY(idGameGame, idGameGenre))', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGamePlatforms (idGameGame INTEGER, idGamePlatforms INTEGER, PRIMARY KEY(idGameGame, idGamePlatforms))', null, null, errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameModes (idGameGameMode INTEGER, idGames INTEGER, PRIMARY KEY(idGameGameMode, idGames))', null, null, errorCallback);
 });
 
 function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE){

@@ -2,16 +2,10 @@
     <div class="page">
 
         <!-- Top Navbar -->
-        <div class="navbar navbar-large">
+        <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="right">
-                    <a href="#" class="link icon-only panel-open" data-panel="right">
-                        <i class="icon f7-icons if-not-md">menu</i>
-                        <i class="icon material-icons if-md">menu</i>
-                    </a>
-                </div>
-                <div class="title-large">
+                <div class="title">
                     <div class="title-large-text">All Games</div>
                 </div>
             </div>
@@ -19,9 +13,17 @@
         <div class="page-content">
             <div class="block block-strong">
                 <table>
+                    <tr>
+                            <th>Name</th>
+                            <th>Rat.</th>
+                            <th>Out</th>
+                            <th>Pop.</th>
+                            <th>Gen.</th>
+                            <th>Pla.</th>
+                    </tr>
                 {{#each games}}
                     <tr>
-                        <td>{{name}}</td>
+                        <td>{{nameGame}}</td>
                         <td>{{rating}}</td>
                         <td>{{release}}</td>
                         <td>{{popularity}}</td>
@@ -35,5 +37,9 @@
     </div>
 </template>
 <script>
-    export default {};
+    export default {
+        data: function(){
+            return{games : this.$root.games}
+        }
+    };
 </script>

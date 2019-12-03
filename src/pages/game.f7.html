@@ -1,14 +1,20 @@
 <template>
     <div class="page">
 
-        
-    <!-- Top Navbar -->
-    <div class="navbar ">
+        <!-- Top Navbar -->
+        <div class="navbar ">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="title-large-text">{{game.title}}</div>
+                <div class="left">
+                        <a href="/" class="link icon-only">
+                            <i class="icon icon-back"></i>
+                        </a>
+                </div>
+                <div class="title">
+                    {{game.nameGame}}
+                </div>
             </div>
-          </div>
+        </div>
 
 
         <div class="page-content">
@@ -16,14 +22,15 @@
                 <div class="block col-50">
                     <img data-src="{{game.img}}" width="100%" class="lazy" />
                 </div>
-                <div class="block block-strong col-50">
-                    <div class="block">Release: {{game.release}}</div>
-                    <div class="block">Ratings: {{game.rating}}</div>
-                    <div class="block">Genre(s): {{game.genres}}</div>
-                    <div class="block">Platform(s): {{game.platforms}}</div>
+                <div class="block col-50">
+                    <p>Release: {{game.release}}</p>
+                    <p>Ratings: {{game.rating}}</p>
+                    <p>Popularity: {{game.popularity}}</p>
+                    <p>Genre(s): {{game.genres}}</p>
+                    <p>Platform(s): {{game.platforms}}</p>
                 </div>
             </div>
-            
+
             <div class="block">
                 Summary
                 <p>{{game.summary}}</p>
@@ -33,6 +40,7 @@
                 <p>{{game.storyline}}</p>
             </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -41,11 +49,13 @@
             var gameId = this.$route.params.id;
             var currentGame;
             this.$root.games.forEach(function (g) {
-                console.log(g);
-                if (g.id === gameId) {
-                    return { game: g };
+                if (g.idGame == gameId) {
+                    currentGame = g;
                 }
             });
+
+            console.log(currentGame);
+            return { game: currentGame }
         }
     };
 </script>

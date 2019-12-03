@@ -1,22 +1,24 @@
 <template>
-  <div class="page" data-name="home">
+    <div class="page" data-name="home">
 
-    <!-- Top Navbar -->
-    <div class="navbar ">
-      <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-          <div class="title-large-text">GameDB</div>
-      </div>
-    </div>
+        <!-- Top Navbar -->
+        <div class="navbar ">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">
+                <div class="title-large-text">GameDB</div>
+            </div>
+          </div>
+        </div>
 
     <!-- Scrollable page content-->
     <div class="page-content">
       <div class="block">
         <div class="block-title">Actual Games</div>
-        <div class="row" id="actualGames">
+        <div class="row" idGame="actualGames">
           {{#each actual}}
-          <a href="/game/{{id}}/" class="block col-33">
-            <div class="block block-header text-align-center">{{title}}</div>
+          <a href="/game/{{idGame}}/" class="block col-33 gameCard">
+            <div class="block block-header text-align-center">{{nameGame}}</div>
             <img data-src="{{img}}" width="100%" class="lazy" />
           </a>
           {{/each}}
@@ -26,10 +28,10 @@
 
       <div class="block">
         <div class="block-title">Followed Games</div>
-        <div class="row" id="followedGames">
+        <div class="row" idGame="followedGames">
           {{#each followed}}
-          <a href="game/{{id}}/" class="block col-33">
-            <div class="block block-header text-align-center">{{title}}</div>
+          <a href="game/{{idGame}}/" class="block col-33 gameCard">
+            <div class="block block-header text-align-center">{{nameGame}}</div>
             <img data-src="{{img}}" width="100%" class="lazy" />
           </a>
           {{/each}}
@@ -46,9 +48,22 @@
 <script>
   export default {
     data: function () {
+      var allGames = this.$root.games;
+      var actuals = [];
+      var followed = [];
+
+      allGames.forEach(g => {
+        if (actuals.length < 3 && this.$root.actualGames.indexOf(g.idGame) > -1) {
+          actuals.push(g);
+        }
+        if (followed.length < 3 && this.$root.followedGames.indexOf(g.idGame) > -1) {
+          followed.push(g);
+        }
+
+      });
       return {
-        actual: this.$root.actualGames,
-        followed: this.$root.followedGames,
+        actual: actuals,
+        followed: followed,
       }
     }
   }
