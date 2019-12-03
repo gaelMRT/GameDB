@@ -18,6 +18,18 @@
         </div>
         <div class="page-content">
             <div class="block block-strong">
+                <table>
+                {{#each followed}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{rating}}</td>
+                        <td>{{release}}</td>
+                        <td>{{popularity}}</td>
+                        <td>{{genres}}</td>
+                        <td>{{platforms}}</td>
+                    </tr>
+                {{/each}}
+                </table>
             </div>
         </div>
     </div>

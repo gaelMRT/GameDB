@@ -12,7 +12,25 @@
 
 
         <div class="page-content">
-            <div class="block block-strong">
+            <div class="row">
+                <div class="block col-50">
+                    <img data-src="{{game.img}}" width="100%" class="lazy" />
+                </div>
+                <div class="block block-strong col-50">
+                    <div class="block">Release: {{game.release}}</div>
+                    <div class="block">Ratings: {{game.rating}}</div>
+                    <div class="block">Genre(s): {{game.genres}}</div>
+                    <div class="block">Platform(s): {{game.platforms}}</div>
+                </div>
+            </div>
+            
+            <div class="block">
+                Summary
+                <p>{{game.summary}}</p>
+            </div>
+            <div class="block">
+                Storyline
+                <p>{{game.storyline}}</p>
             </div>
         </div>
     </div>
@@ -22,13 +40,12 @@
         data: function () {
             var gameId = this.$route.params.id;
             var currentGame;
-            this.$root.games.forEach(function (game) {
-                console.log(game);
-                if (game.id === gameId) {
-                    currentGame = game;
+            this.$root.games.forEach(function (g) {
+                console.log(g);
+                if (g.id === gameId) {
+                    return { game: g };
                 }
             });
-            return { game: currentGame };
         }
     };
 </script>

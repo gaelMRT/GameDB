@@ -19,10 +19,33 @@
         <div class="page-content">
             <div class="block block-strong">
                 <p>Results</p>
+                
+                <table>
+                {{#each searched}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{rating}}</td>
+                        <td>{{release}}</td>
+                        <td>{{popularity}}</td>
+                        <td>{{genres}}</td>
+                        <td>{{platforms}}</td>
+                    </tr>
+                {{/each}}
+                </table>
             </div>
         </div>
     </div>
 </template>
 <script>
-    export default {};
+    export default {
+        data: function () {
+        return {
+            searched: searchGames(),
+            
+        }
+        }
+    };
+    function searchGames(argument){
+        
+    }
 </script>

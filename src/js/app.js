@@ -1,6 +1,10 @@
 import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
 
+const HOURS_BEFORE_CONNECTED_UPDATE = 1;
+const DAYS_ACTUAL_AFTER_BEFORE = 30;
+
+
 // Import F7 Styles
 import 'framework7/css/framework7.bundle.css';
 
@@ -24,8 +28,9 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
-      // Demo products for Catalog section
-      products: [
+
+      // Demo games for followed section
+      followedGames: [
         {
           id: '1',
           title: 'Apple iPhone 8',
@@ -41,9 +46,16 @@ var app = new Framework7({
           title: 'Apple iPhone X',
           description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
         },
-      ]// Demo products for Catalog section
-      ,
-      games: [
+      ],
+
+      //Demo games for details
+      games:[
+        {id:1,
+        }
+      ],
+      
+      // Demo games for actual Section
+      actualGames: [
         {
           id: '22',
           title: 'Jeu du kangourou',
@@ -57,6 +69,7 @@ var app = new Framework7({
         {
           id: '3',
           title: 'La chouette',
+          img:'',
           description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
         },
       ]
@@ -93,14 +106,27 @@ var app = new Framework7({
   },
 });
 
-// Login Screen Demo
-$$('#my-login-screen .login-button').on('click', function () {
-  var username = $$('#my-login-screen [name="username"]').val();
-  var password = $$('#my-login-screen [name="password"]').val();
+var db = openDatabase('mrtGameDB','1.0','mrtGameDB',12*1024*1024);
 
-  // Close login screen
-  app.loginScreen.close('#my-login-screen');
-
-  // Alert username and password
-  app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
+db.transaction(function (tx){
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGames (idGame INTEGER PRIMARY KEY, nameGame TEXT NOT NULL, summary TEXT NOT NULL, storyline TEXT,note DOUBLE,firstReleaseDate INTEGER);',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TFollowedGames (idFollowedGame INTEGER PRIMARY KEY)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGenres (idGenre INTEGER PRIMARY KEY,nameGenre TEXT NOT NULL)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TModes (idMode INTEGER PRIMARY KEY,nameMode TEXT NOT NULL)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TPlatforms (idPlatform INTEGER PRIMARY KEY, namePlatform TEXT NOT NULL)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TCompanies (idCompany INTEGER PRIMARY KEY, nameCompany TEXT NOT NULL)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TLastUpdated (idLastUpdate INTEGER PRIMARY KEY,tableName TEXT NOT NULL,lastUpdated INTEGER NOT NULL)',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameCompanies (idGame INTEGER,idCompany INTEGER,PRIMARY KEY(idGame,idCompany))',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameGenres (idGame INTEGER,idGenre INTEGER,PRIMARY KEY(idGame,idGenre))',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGamePlatforms (idGame INTEGER,idPlatforms INTEGER,PRIMARY KEY(idGame,idPlatforms))',null,null,errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TGameModes (idGameMode INTEGER,ids INTEGER,PRIMARY KEY(idGameMode,ids))',null,null,errorCallback);
 });
+
+function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE){
+  
+}
+
+function errorCallback(err){
+  alert("Une erreur est survenue : "+err);
+}
+
