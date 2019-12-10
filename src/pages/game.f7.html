@@ -23,7 +23,7 @@
                     <img data-src="{{game.img}}" width="100%" class="lazy" />
                 </div>
                 <div class="block col-50">
-                    <p>Release: {{game.release}}</p>
+                    <p>Release: {{game.firstReleaseDate}}</p>
                     <p>Ratings: {{game.rating}}</p>
                     <p>Popularity: {{game.popularity}}</p>
                     <p>Genre(s): {{game.genres}}</p>
@@ -53,8 +53,6 @@
                     currentGame = g;
                 }
             });
-
-            console.log(currentGame);
             return { game: currentGame }
         }
     };

@@ -20,3 +20,12 @@ td{
   border-right: 1px solid black;
   border-bottom: 1px dotted black;
 }
+.tableLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color:black;
+}
+.tableLink:hover{
+  cursor: pointer;
+}

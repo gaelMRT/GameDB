@@ -23,12 +23,12 @@
                     </tr>
                 {{#each games}}
                     <tr>
-                        <td>{{nameGame}}</td>
-                        <td>{{rating}}</td>
-                        <td>{{release}}</td>
-                        <td>{{popularity}}</td>
-                        <td>{{genres}}</td>
-                        <td>{{platforms}}</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{nameGame}}</a></td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{rating}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{firstReleaseDate}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{popularity}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{genres}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{platforms}}</a</td>
                     </tr>
                 {{/each}}
                 </table>

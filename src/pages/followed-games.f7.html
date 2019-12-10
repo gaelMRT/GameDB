@@ -13,14 +13,22 @@
         <div class="page-content">
             <div class="block block-strong">
                 <table>
-                {{#each followed}}
                     <tr>
-                        <td>{{name}}</td>
-                        <td>{{rating}}</td>
-                        <td>{{release}}</td>
-                        <td>{{popularity}}</td>
-                        <td>{{genres}}</td>
-                        <td>{{platforms}}</td>
+                            <th>Name</th>
+                            <th>Rat.</th>
+                            <th>Out</th>
+                            <th>Pop.</th>
+                            <th>Gen.</th>
+                            <th>Pla.</th>
+                    </tr>
+                {{#each games}}
+                    <tr>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{nameGame}}</a></td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{rating}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{firstReleaseDate}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{popularity}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{genres}}</a</td>
+                        <td><a class="tableLink" href="/game/{{idGame}}/">{{platforms}}</a</td>
                     </tr>
                 {{/each}}
                 </table>
@@ -29,5 +37,16 @@
     </div>
 </template>
 <script>
-    export default {};
+    export default {
+        data: function(){
+            var followed = [];
+            this.$root.followedGames.forEach(id => {
+                var el = this.$root.games.find(g => g.idGame == id);
+                if(el != undefined){
+                    followed.push(el);
+                }
+            });
+            return{games : followed}
+        }
+    };
 </script>
