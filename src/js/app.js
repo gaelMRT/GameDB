@@ -4,7 +4,8 @@ import Framework7 from 'framework7/framework7.esm.bundle.js';
 const HOURS_BEFORE_CONNECTED_UPDATE = 1;
 const DAYS_ACTUAL_AFTER_BEFORE = 30;
 const IMG_URL = "https://images.igdb.com/igdb/image/upload/t_cover_big/:imgId.jpg";
-const DAYS_TO_MS = 24*60*60*1000;
+const DAYS_TO_MS = 24 * 60 * 60 * 1000;
+const NEEDED_FIELDS = "fields cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,game_modes.name,involved_companies.company.name;";
 
 
 // Import F7 Styles
@@ -30,26 +31,26 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
-      games:[
+      games: [
         {
           idGame: 1,
           nameGame: 'Jeu N°1',
           platforms: 'PC, PS4',
-          genres:'Action, Adventure',
-          release:'05-10-2019',
-          rating:54.32,
-          popularity:5,
-          img:'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
+          genres: 'Action, Adventure',
+          release: '05-10-2019',
+          rating: 54.32,
+          popularity: 5,
+          img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1lgd.jpg',
           summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
           storyline: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
         }
       ],
       // Demo games for followed section
-      followedGames: [1,22,3,6],
+      followedGames: [1, 22, 3, 6],
 
-      
+
       // Demo games for actual Section
-      actualGames: [22,2,3]
+      actualGames: [22, 2, 3]
     };
   },
   // App root methods
@@ -83,9 +84,22 @@ var app = new Framework7({
   },
 });
 
-var db = openDatabase('mrtGameDB','1.0','mrtGameDB',12*1024*1024);
+var db = openDatabase('mrtGameDB', '1.0', 'mrtGameDB', 12 * 1024 * 1024);
 
-db.transaction(function (tx){
+db.transaction(function (tx) {
+  tx.executeSql('DROP TABLE IF EXISTS TGames;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TFollowedGames ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TGenres ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TModes ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TPlatforms ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TCompanies ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TGameCompanies;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TGameGenres ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TGamePlatforms ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TGameModes ;', null, null, errorCallback);
+  tx.executeSql('DROP TABLE IF EXISTS TLastUpdated ;', null, null, errorCallback);
+
+
   tx.executeSql('CREATE TABLE IF NOT EXISTS TGames (idGame INTEGER PRIMARY KEY,imgId TEXT, nameGame TEXT NOT NULL, summary TEXT NOT NULL, storyline TEXT, rating DOUBLE,popularity DOUBLE, firstReleaseDate INTEGER);', null, null, errorCallback);
   tx.executeSql('CREATE TABLE IF NOT EXISTS TFollowedGames (idFollowedGame INTEGER PRIMARY KEY)', null, null, errorCallback);
   tx.executeSql('CREATE TABLE IF NOT EXISTS TGenres (idGenre INTEGER PRIMARY KEY, nameGenre TEXT NOT NULL)', null, null, errorCallback);
@@ -97,198 +111,207 @@ db.transaction(function (tx){
   tx.executeSql('CREATE TABLE IF NOT EXISTS TGamePlatforms (idGame INTEGER, idPlatforms INTEGER, PRIMARY KEY(idGame, idPlatforms))', null, null, errorCallback);
   tx.executeSql('CREATE TABLE IF NOT EXISTS TGameModes (idGame INTEGER, idMode INTEGER, PRIMARY KEY(idGame, idMode))', null, null, errorCallback);
 
-  tx.executeSql('CREATE TABLE IF NOT EXISTS TLastUpdated (idLastUpdate INTEGER PRIMARY KEY, tableName TEXT NOT NULL, lastUpdated INTEGER NOT NULL)', null, null, errorCallback);
-},errorCallback);
+  tx.executeSql('CREATE TABLE IF NOT EXISTS TLastUpdated (idLastUpdated INTEGER PRIMARY KEY, tableName TEXT NOT NULL, lastUpdated INTEGER NOT NULL)', null, null, errorCallback);
+}, errorCallback);
+
 
 db.transaction(function (tx) {
-  tx.executeSql("SELECT * FROM TLastUpdated WHERE tableName == 'TGame';",null,function (tx,results) {
-    if(results.rows.length == 0){
+  tx.executeSql("SELECT * FROM TLastUpdated WHERE tableName == 'TGame';", null, function (tx, results) {
+    if (results.rows.length == 0) {
+      console.log("populate");
       populateDB(tx);
     }
-  },errorCallback)
-},errorCallback);
+  }, errorCallback)
+}, errorCallback);
 
 importGames();
 
 
 
 //Populate de Database
-function populateDB(tx){
-  var myHeaders = new Headers();
-  myHeaders.append('user-key','c364edc9293459fe126c3de23e9bf176');
-
-  var myInits = {
-    method: 'GET',
-    headers : myHeaders,
-    mode : 'no-cors',
-    cache : 'default'
-  } 
+function populateDB(tx) {
 
   //Récupère les bonnes dates
-  var dBefore = Date.now() - DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS;
-  var dAfter = Date.now() + DAYS_ACTUAL_AFTER_BEFORE*DAYS_TO_MS;
+  var dBefore = Math.round((Date.now() - DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS) / 1000);
+  var dAfter = Math.round((Date.now() + DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS) / 1000);
 
-  var myRequest = new Request('https://api-v3.igdb.com/games/')
-  
   //Récupère tous les jeux nécessaires
-  var body = "fields cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,game_modes.name,involved_companies.company.name; where (first_release_date > "+dBefore+" & first_release_date < "+dAfter+") ";
-  app.data.followedGames.forEach(element => {
-    body += "| id == "+element+" ";
-  });
-  myRequest.body = body
+  var body = NEEDED_FIELDS + " where (first_release_date > " + dBefore + " & first_release_date < " + dAfter + ") ";
+  if (app.data.followedGames.length > 0) {
+    body += "| id = (" + app.data.followedGames[0];
+    for (let i = 1; i < app.data.followedGames.length; i++) {
+      body += "," + app.data.followedGames[i];
+    }
+    body += ");";
+  }
 
   //Récupère
-  fetch(myRequest,myInits).then(function(resp){
-    return JSON.parse(resp);
+  fetch('https://api-v3.igdb.com/games/', {
+    method: "post",
+    body: body,
+    cache: 'default',
+    headers: {
+      "user-key": "c364edc9293459fe126c3de23e9bf176",
+      "Content-Type": "application/json"
+    }
+  }).then(function (resp) {
+    return resp.json();
   }).then(function (response) {
     response.forEach(row => {
-      var sql = "INSERT OR REPLACE FROM TGames (idGame,imgId,nameGame,rating,popularity,firstReleaseDate,summary,storyline) VALUES (:id,':imgId',':name',:rate,:pop,:rel,:sum,:sto);";
+      var sql = "INSERT OR REPLACE INTO TGames (idGame,imgId,nameGame,rating,popularity,firstReleaseDate,summary,storyline) VALUES (:id,':imgId',':name',:rate,:pop,:rel,\":sum\",\":sto\");";
+      sql = sql.replace(':id', row['id']);
+      sql = sql.replace(':imgId', IMG_URL.replace(':imgId', row.cover.image_id));
+      sql = sql.replace(':name', row['name']);
+      sql = sql.replace(':rate', (row['rating'] == undefined?0:row['rating']));
+      sql = sql.replace(':pop', (row['popularity'] == undefined?0:row['popularity']));
+      sql = sql.replace(':rel', row['first_release_date']);
+      sql = sql.replace(':sum', (row['summary'] == undefined?"":row['summary']));
+      sql = sql.replace(':sto', (row['storyline'] == undefined?"":row['storyline']));
 
-      sql = sql.replace(':id',row['id']);
-      sql = sql.replace(':imgId',IMG_URL.replace(':imgId',row.cover.image_id));
-      sql = sql.replace(':name',row['name']);
-      sql = sql.replace(':rate',row['rating']);
-      sql = sql.replace(':pop',row['popularity']);
-      sql = sql.replace(':rel',row['first_release_date']);
-      sql = sql.replace(':sum',row['summary']);
-      sql = sql.replace(':sto',row['storyline']);
+      console.log(sql);
 
-      tx.executeSql(sql,null,null,errorCallback);
+      tx.executeSql(sql, null, function (tx, results) {
 
-      row['genres'].forEach(genr => {
-        var sqlGenre = "INSERT OR REPLACE FROM TGenres (idGenre,nameGenre) VALUES (:id,':name');";
+        console.log("success");
+        row['genres'].forEach(genr => {
+          var sqlGenre = "INSERT OR REPLACE INTO TGenres (idGenre,nameGenre) VALUES (:id,':name');";
 
-        sqlGenre = sqlGenre.replace(':id',genr['id']);
-        sqlGenre = sqlGenre.replace(':id',genr['name']);
+          sqlGenre = sqlGenre.replace(':id', genr['id']);
+          sqlGenre = sqlGenre.replace(':id', genr['name']);
 
-        tx.executeSql(sqlGenre,null,null,errorCallback);
+          tx.executeSql(sqlGenre, null, function(tx) {
+            var linkGenre = "INSERT OR REPLACE INTO TGameGenres (idGame,idGenre) VALUES (:idGame,:idGenre);"
+  
+            linkGenre = linkGenre.replace(':idGame', row['id']);
+            linkGenre = linkGenre.replace(':idGenre', genr['id']);
+  
+            tx.executeSql(linkGenre, null, null, errorCallback);
+          }, errorCallback);
 
-        var linkGenre = "INSERT OR REPLACE FROM TGameGenres (idGame,idGenre) VALUES (:idGame,:idGenre);"
+        });//end genre
 
-        linkGenre = linkGenre.replace(':idGame',row['id']);
-        linkGenre = linkGenre.replace(':idGenre',genr['id']);
+        row['platforms'].forEach(plat => {
+          var sqlPlatform = "INSERT OR REPLACE INTO TPlatforms (idPlatform,namePlatform) VALUES (:id,':name');";
 
-        tx.executeSql(linkGenre,null,null,errorCallback);
-      });//end genre
+          sqlPlatform = sqlPlatform.replace(':id', plat['id']);
+          sqlPlatform = sqlPlatform.replace(':id', plat['name']);
 
-      row['platforms'].forEach(plat => {
-        var sqlPlatform = "INSERT OR REPLACE FROM TPlatforms (idPlatform,namePlatform) VALUES (:id,':name');";
+          tx.executeSql(sqlPlatform, null, null, errorCallback);
 
-        sqlPlatform = sqlPlatform.replace(':id',plat['id']);
-        sqlPlatform = sqlPlatform.replace(':id',plat['name']);
+          var linkPlatform = "INSERT OR REPLACE INTO TGamePlatforms (idGame,idPlatform) VALUES (:idGame,:idPlatform);"
 
-        tx.executeSql(sqlPlatform,null,null,errorCallback);
+          linkPlatform = linkPlatform.replace(':idGame', row['id']);
+          linkPlatform = linkPlatform.replace(':idPlatform', plat['id']);
 
-        var linkPlatform = "INSERT OR REPLACE FROM TGamePlatforms (idGame,idPlatform) VALUES (:idGame,:idPlatform);"
+          tx.executeSql(linkPlatform, null, null, errorCallback);
+        });//end platforms
 
-        linkPlatform = linkPlatform.replace(':idGame',row['id']);
-        linkPlatform = linkPlatform.replace(':idPlatform',plat['id']);
+        row['gameMode'].forEach(mode => {
+          var sqlMode = "INSERT OR REPLACE INTO TModes (idMode,nameMode) VALUES (:id,':name');";
 
-        tx.executeSql(linkPlatform,null,null,errorCallback);
-      });//end platforms
+          sqlMode = sqlMode.replace(':id', mode['id']);
+          sqlMode = sqlMode.replace(':id', mode['name']);
 
-      row['gameMode'].forEach(mode => {
-        var sqlMode = "INSERT OR REPLACE FROM TModes (idMode,nameMode) VALUES (:id,':name');";
+          tx.executeSql(sqlMode, null, null, errorCallback);
 
-        sqlMode = sqlMode.replace(':id',mode['id']);
-        sqlMode = sqlMode.replace(':id',mode['name']);
+          var linkMode = "INSERT OR REPLACE INTO TGameModes (idGame,idMode) VALUES (:idGame,:idMode);"
 
-        tx.executeSql(sqlMode,null,null,errorCallback);
+          linkMode = linkMode.replace(':idGame', row['id']);
+          linkMode = linkMode.replace(':idMode', mode['id']);
 
-        var linkMode = "INSERT OR REPLACE FROM TGameModes (idGame,idMode) VALUES (:idGame,:idMode);"
+          tx.executeSql(linkMode, null, null, errorCallback);
+        });//end gamemode
 
-        linkMode = linkMode.replace(':idGame',row['id']);
-        linkMode = linkMode.replace(':idMode',mode['id']);
+        row['involved_companies'].forEach(comp => {
+          var sqlCompany = "INSERT OR REPLACE INTO TCompanies (idCompany,nameCompany) VALUES (:id,':name');";
 
-        tx.executeSql(linkMode,null,null,errorCallback);
-      });//end gamemode
+          sqlCompany = sqlCompany.replace(':id', comp['id']);
+          sqlCompany = sqlCompany.replace(':id', comp['name']);
 
-      row['involved_companies'].forEach(comp => {
-        var sqlCompany = "INSERT OR REPLACE FROM TCompanies (idCompany,nameCompany) VALUES (:id,':name');";
+          tx.executeSql(sqlCompany, null, null, errorCallback);
 
-        sqlCompany = sqlCompany.replace(':id',comp['id']);
-        sqlCompany = sqlCompany.replace(':id',comp['name']);
+          var linkCompany = "INSERT OR REPLACE INTO TGameCompanies (idGame,idCompany) VALUES (:idGame,:idCompany);"
 
-        tx.executeSql(sqlCompany,null,null,errorCallback);
+          linkCompany = linkCompany.replace(':idGame', row['id']);
+          linkCompany = linkCompany.replace(':idCompany', comp['id']);
 
-        var linkCompany = "INSERT OR REPLACE FROM TGameCompanies (idGame,idCompany) VALUES (:idGame,:idCompany);"
+          tx.executeSql(linkCompany, null, null, errorCallback);
+        });//end companies
 
-        linkCompany = linkCompany.replace(':idGame',row['id']);
-        linkCompany = linkCompany.replace(':idCompany',comp['id']);
+      }, errorCallback); //end insert game
 
-        tx.executeSql(linkCompany,null,null,errorCallback);
-      });//end companies
 
     });
   });//end fetch
 
   var dt = Date.now();
-  tx.executeSql('INSERT OR REPLACE FROM TLastUpdated (idLastUpdated,tableName,lastUpdated) VALUES (SELECT idLastUpdated FROM TLastUpdated WHERE tableName = "TGames","TGames",'+dt+' );',null,null,errorCallback);
+  tx.executeSql('INSERT OR REPLACE INTO TLastUpdated (idLastUpdated,tableName,lastUpdated) VALUES (1,"TGames",' + dt + ' );', null, null, errorCallback);
 }// end populateDB
 
 //Import the games from the database
-function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE){
+function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE) {
+  console.log("Bop");
   var games = [];
-  db.transaction(function(tx){
-    tx.executeSql('SELECT * FROM TGames WHERE '+
-    '(firstReleaseDate > DATE("now","-'+daysBeforeAfter+'days") AND' +
-    'firstReleaseDate < DATE("now","+'+daysBeforeAfter+'days")) OR '+
-    '(idGame IN (SELECT idFollowedGame FROM TFollowedGames));'
-    ,[],function(tx,results){
-      for (let i = 0; i < results.rows.length; i++) {
-        var row = results.rows.item(i);
-        row.platforms = getPlatforms(tx,row.idGame);
-        row.genres = getGenres(tx,row.idGame);
-        row.companies = getCompanies(tx,row.idGame);
-        row.modes = getModes(tx,row.idGame);
-        games.push(row);
+  db.transaction(function (tx) {
+    tx.executeSql('SELECT * FROM TGames WHERE ' +
+      '(firstReleaseDate > DATE("now","-' + daysBeforeAfter + 'days") AND ' +
+      'firstReleaseDate < DATE("now","+' + daysBeforeAfter + 'days")) OR ' +
+      '(idGame IN (SELECT idFollowedGame FROM TFollowedGames));'
+      , [], function (tx, results) {
+        for (let i = 0; i < results.rows.length; i++) {
+          var row = results.rows.item(i);
+          row.platforms = getPlatforms(tx, row.idGame);
+          row.genres = getGenres(tx, row.idGame);
+          row.companies = getCompanies(tx, row.idGame);
+          row.modes = getModes(tx, row.idGame);
+          games.push(row);
+        }
       }
-    }
-    ,errorCallback);
-    console.log(games); //TODO - Remove debug
-  },errorCallback);
+      , errorCallback);
+  }, errorCallback);
 
 }//end importGames
 
-function returnList(tx,results){
+function returnList(tx, results) {
   var list = [];
   for (let i = 0; i < results.rows.length; i++) {
     list.push(results.rows.item(i));
   }
   return list;
 }
-function listToStr(list,field){
+function listToStr(list, field) {
   var str = "";
   list.forEach(el => {
-    str += el[field]+',';
+    str += el[field] + ',';
   });
-  return str.substring(0,str.length - 1);
+  return str.substring(0, str.length - 1);
 }
 
-function getPlatforms(tx,idGame){
-  var sql = "SELECT tp.namePlatform FROM TGamePlatforms AS tgp, TPlatforms AS tp WHERE tp.idPlatform == tgp.idPlatform AND tgp.idGame == "+idGame+";";
-  var list = tx.executeSql(sql,[],returnList,errorCallback);
-  return listToStr(list,'namePlatform');
+function getPlatforms(tx, idGame) {
+  var sql = "SELECT tp.namePlatform FROM TGamePlatforms AS tgp, TPlatforms AS tp WHERE tp.idPlatform == tgp.idPlatform AND tgp.idGame == " + idGame + ";";
+  var list = tx.executeSql(sql, [], returnList, errorCallback);
+  return listToStr(list, 'namePlatform');
 }
-function getModes(tx,idGame){
-  var sql = "SELECT tp.nameMode FROM TGameModes AS tgm, TModes AS tp WHERE tp.idMode == tgm.idMode AND tgm.idGame == "+idGame+";";
-  var list = tx.executeSql(sql,[],returnList,errorCallback);
-  return listToStr(list,'nameMode');
+function getModes(tx, idGame) {
+  var sql = "SELECT tp.nameMode FROM TGameModes AS tgm, TModes AS tp WHERE tp.idMode == tgm.idMode AND tgm.idGame == " + idGame + ";";
+  var list = tx.executeSql(sql, [], returnList, errorCallback);
+  return listToStr(list, 'nameMode');
 }
-function getCompanies(tx,idGame){
-  var sql = "SELECT tp.nameCompany FROM TGameCompanies AS tgc, TCompanies AS tp WHERE tp.idCompany == tgc.idCompany AND tgc.idGame == "+idGame+";";
-  var list = tx.executeSql(sql,[],returnList,errorCallback);
-  return listToStr(list,'nameCompany');
+function getCompanies(tx, idGame) {
+  var sql = "SELECT tp.nameCompany FROM TGameCompanies AS tgc, TCompanies AS tp WHERE tp.idCompany == tgc.idCompany AND tgc.idGame == " + idGame + ";";
+  var list = tx.executeSql(sql, [], returnList, errorCallback);
+  return listToStr(list, 'nameCompany');
 }
-function getGenres(tx,idGame){
-  var sql = "SELECT tp.nameGenre FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == "+idGame+";";
-  var list = tx.executeSql(sql,[],returnList,errorCallback);
-  return listToStr(list,'nameGenre');
+function getGenres(tx, idGame) {
+  var sql = "SELECT tp.nameGenre FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == " + idGame + ";";
+  var list = tx.executeSql(sql, [], returnList, errorCallback);
+  return listToStr(list, 'nameGenre');
 }
 
-function errorCallback(err){
-  console.log(err);
-  alert("Une erreur est survenue : "+err.message);
+function errorCallback(tx, err) {
+  alert("Une erreur est survenue " + err.message);
+
+  console.log("Raté");
   return false;
 }
 
