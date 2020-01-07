@@ -59,6 +59,7 @@ Framework7 app created with following options:
 * 📱 `build-prod-cordova-ios` - build cordova iOS app
 * 📱 `build-dev-cordova-android` - build cordova Android app using development mode (faster build without minification and optimization)
 * 📱 `build-prod-cordova-android` - build cordova Android app
+* 📱 `phRun` - build cordova Android app and run it
 
 ## WebPack
 
