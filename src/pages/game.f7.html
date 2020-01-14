@@ -46,7 +46,7 @@
 <script>
     export default {
         data: function () {
-            var gameId = this.$route.params.id;
+            var gameId = this.$root.params.id;
             var currentGame;
             this.$root.games.forEach(function (g) {
                 if (g.idGame == gameId) {
