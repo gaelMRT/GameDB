@@ -1,0 +1,40 @@
+<template>
+  <div class="page" data-name="home">
+
+    <!-- Top Navbar -->
+    <div class="navbar ">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner">
+        <div class="title">
+          <div class="title-large-text">GameDB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="block">
+        <div class="block-title">Actual Games</div>
+        <div class="row" id="actualGames">
+          {{#each allGames}}
+          <a href="/game/{{idGame}}/" class="block col-33 gameCard">
+            <div class="block block-header text-align-center">{{nameGame}}</div>
+            <img data-src="{{img}}" width="100%" class="lazy" />
+          </a>
+          {{/each}}
+        </div>
+      </div>
+
+
+      <div class="block">
+        <div class="block-title">Followed Games</div>
+        <div class="row" id="followedGames">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+</template>
