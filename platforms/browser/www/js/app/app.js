@@ -20,30 +20,65 @@ var app = new Framework7({
     {
       path: '/actual-games/',
       component: '../pages/actual-games.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetActualHTML();
+        }
+      }  
     },
     {
       path: '/all-games/',
       component: '../pages/all-games.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetAllHTML();
+        }
+      }  
     },
     {
       path: '/followed-games/',
       component: '../pages/followed-games.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetHomeHTML();
+        }
+      }  
     },
     {
       path: '/game/:id/',
       component: '../pages/game.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetHomeHTML();
+        }
+      }  
     },
     {
       path: '/search/:search/',
       component: '../pages/search-results.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetHomeHTML();
+        }
+      }  
     },
     {
       path: '/search/',
       component: '../pages/search.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetHomeHTML();
+        }
+      }  
     },
     {
       path: '(.*)',
       component: '../pages/404.f7.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetHomeHTML();
+        }
+      }  
     },
   ],
   // ... other parameters

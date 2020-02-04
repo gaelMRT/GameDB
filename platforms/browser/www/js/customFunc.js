@@ -1,7 +1,6 @@
 
 //Custom Func
 function GetHomeHTML() {
-    console.log("Bite");
     var games = [];
     db.transaction(function (tx) {
         tx.executeSql('SELECT tg.*,tfg.idFollowedGame AS followed  FROM TGames tg LEFT JOIN TFollowedGames AS tfg ON tg.idGame = tfg.idFollowedGame ;'
@@ -33,8 +32,76 @@ function GetHomeHTML() {
                 actualCount++;
             }
         }
-        followedGames.innerHTML = followed;
-        actualGames.innerHTML = actual;
+        document.getElementById('followedGames').innerHTML = followed;
+        document.getElementById('actualGames').innerHTML = actual;
+    });
+}
+
+
+function GetAllHTML() {
+    var games = [];
+    db.transaction(function (tx) {
+        tx.executeSql('SELECT *  FROM TGames tg;'
+            , [], function (tx, results) {
+                for (let i = 0; i < results.rows.length; i++) {
+                    var row = results.rows.item(i);
+                    row.platforms = getPlatforms(tx, row.idGame);
+                    row.genres = getGenres(tx, row.idGame);
+                    row.companies = getCompanies(tx, row.idGame);
+                    row.modes = getModes(tx, row.idGame);
+                    games.push(row);
+                }
+            }, errorCallback);
+    }, errorCallback, function () {
+        var allG = "<tr><th>Name</th><th>Rat.</th><th>Out</th><th>Pop.</th><th>Gen.</th><th>Pla.</th></tr>";
+        for (let i = 0; i < games.length; i++) {
+
+            const g = games[i];
+            allG += '<tr>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.nameGame+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.rating+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.firstReleaseDate+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.popularity+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.genres+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.platforms+'</a></td>';
+            allG += '</tr>'
+            
+        }
+        allGameTable.innerHTML = allG;
+    });
+}
+
+
+function GetActualHTML() {
+    var games = [];
+    db.transaction(function (tx) {
+        tx.executeSql('SELECT *  FROM TGames tg;'
+            , [], function (tx, results) {
+                for (let i = 0; i < results.rows.length; i++) {
+                    var row = results.rows.item(i);
+                    row.platforms = getPlatforms(tx, row.idGame);
+                    row.genres = getGenres(tx, row.idGame);
+                    row.companies = getCompanies(tx, row.idGame);
+                    row.modes = getModes(tx, row.idGame);
+                    games.push(row);
+                }
+            }, errorCallback);
+    }, errorCallback, function () {
+        var allG = "<tr><th>Name</th><th>Rat.</th><th>Out</th><th>Pop.</th><th>Gen.</th><th>Pla.</th></tr>";
+        for (let i = 0; i < games.length; i++) {
+
+            const g = games[i];
+            allG += '<tr>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.nameGame+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.rating+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.firstReleaseDate+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.popularity+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.genres+'</a></td>';
+            allG += '<td><a class="tableLink" href="/game/'+g.idGame+'/">'+g.platforms+'</a></td>';
+            allG += '</tr>'
+            
+        }
+        allGameTable.innerHTML = allG;
     });
 }
 
