@@ -1,12 +1,14 @@
 
 const HOURS_BEFORE_CONNECTED_UPDATE = 1;
-const DAYS_ACTUAL_AFTER_BEFORE = 1;
+const DAYS_ACTUAL_AFTER_BEFORE = 7;
 const IMG_URL = "https://images.igdb.com/igdb/image/upload/t_cover_big/:imgId.jpg";
 const DEFAULT_IMG = "res/default-image.png";
 const DAYS_TO_MS = 24 * 60 * 60 * 1000;
-const NEEDED_FIELDS = "fields cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,game_modes.name,involved_companies.company.name;";
+const NEEDED_FIELDS = "fields cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,platforms.alternative_name,game_modes.name,involved_companies.company.name;";
 
 var db = openDatabase('mrtGameDB', '1.0', 'mrtGameDB', 12 * 1024 * 1024);
+createDB();
+populateDB();
 
 function createDB() {
     db.transaction(function (tx) {
@@ -54,19 +56,20 @@ function populateDB() {
             var dAfter = Math.round((Date.now() + DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS) / 1000);
 
             //Récupère
-            /*
+
             //Récupère tous les jeux nécessaires
+
             var body = NEEDED_FIELDS + " where (first_release_date > " + dBefore + " & first_release_date < " + dAfter + ") ";
-            if (app.data.followedGames.length > 0) {
-              body += "| id = (" + app.data.followedGames[0];
-              for (let i = 1; i < app.data.followedGames.length; i++) {
-                body += "," + app.data.followedGames[i];
-              }
-              body += ")";
+            if (app.data != undefined && app.data.followedGames != undefined && app.data.followedGames.length > 0) {
+                body += "| id = (" + app.data.followedGames[0];
+                for (let i = 1; i < app.data.followedGames.length; i++) {
+                    body += "," + app.data.followedGames[i];
+                }
+                body += ")";
             }
-            body += ";limit 100;";
-          
-          
+            body += ";limit 500;";
+
+            /*
             fetch('https://api-v3.igdb.com/games/', {
               method: "post",
               body: body,
@@ -77,18 +80,15 @@ function populateDB() {
               }
             })*/
 
-            var tst = "";
-            if (app.data.followedGames.length > 0) {
-                tst += "| id = (" + app.data.followedGames[0];
-                for (let i = 1; i < app.data.followedGames.length; i++) {
-                    tst += "," + app.data.followedGames[i];
-                }
-                tst += ")";
-            }
-            fetch('http://prox/public/?url=https://api-v3.igdb.com/games/&body=fields%20cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,game_modes.name,involved_companies.company.name;%20where%20(first_release_date%20%3E%20' + dBefore + '%20%26%20first_release_date%20%3C%20' + dAfter + ')%20' + tst + ';limit%20100;', {
+            var sendUrl = 'https://api-v3.igdb.com/games/';
+
+            var url = 'http://prox/public/?url=' + sendUrl + '&body=' + encodeURI(body).replace(/&/g, '%26');
+
+
+            fetch(url, {
                 method: "post"
             }).then(function (resp) {
-                return resp.json();
+                return resp.json()
             }).then(function (response) {
                 db.transaction(function (tx) {
                     response.forEach(row => {
@@ -129,9 +129,9 @@ function populateDB() {
                             if (row.platforms != undefined)
                                 row.platforms.forEach(plat => {
                                     var sqlPlatform = "INSERT OR REPLACE INTO TPlatforms (idPlatform,namePlatform) VALUES (:id,':name');";
-
+                                    var platName = (plat.abbreviation == undefined ? plat.alternative_name : plat.abbreviation);
                                     sqlPlatform = sqlPlatform.replace(':id', plat.id);
-                                    sqlPlatform = sqlPlatform.replace(':name', encodeURI(plat.abbreviation.replace("'", "%27")));
+                                    sqlPlatform = sqlPlatform.replace(':name', encodeURI(platName.replace("\'\g", "%27")));
 
                                     tx.executeSql(sqlPlatform, null, null, errorCallback);
 
@@ -204,16 +204,16 @@ function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE) {
             , [], function (tx, results) {
                 for (let i = 0; i < results.rows.length; i++) {
                     var row = results.rows.item(i);
-                    row.platforms = getPlatforms(tx, row.idGame);
-                    row.genres = getGenres(tx, row.idGame);
-                    row.companies = getCompanies(tx, row.idGame);
-                    row.modes = getModes(tx, row.idGame);
+                    getPlatforms(tx, row);
+                    getGenres(tx, row);
+                    getCompanies(tx, row);
+                    getModes(tx, row);
                     games.push(row);
                 }
             }, errorCallback);
     }, errorCallback, function () {
         games.forEach(element => {
-            app.data.actualGames.push(element.idGame);
+            app.data.actualGames.push(element);
             app.data.games.push(element);
         });
 
@@ -221,42 +221,78 @@ function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE) {
 
 }//end importGames
 
-function getPlatforms(tx, idGame) {
-    var sql = "SELECT tp.namePlatform FROM TGamePlatforms AS tgp, TPlatforms AS tp WHERE tp.idPlatform == tgp.idPlatform AND tgp.idGame == " + idGame + ";";
-    var list = tx.executeSql(sql, [], returnList, errorCallback);
-    return listToStr(list, 'namePlatform');
-}
-function getModes(tx, idGame) {
-    var sql = "SELECT tp.nameMode FROM TGameModes AS tgm, TModes AS tp WHERE tp.idMode == tgm.idMode AND tgm.idGame == " + idGame + ";";
-    var list = tx.executeSql(sql, [], returnList, errorCallback);
-    return listToStr(list, 'nameMode');
-}
-function getCompanies(tx, idGame) {
-    var sql = "SELECT tp.nameCompany FROM TGameCompanies AS tgc, TCompanies AS tp WHERE tp.idCompany == tgc.idCompany AND tgc.idGame == " + idGame + ";";
-    var list = tx.executeSql(sql, [], returnList, errorCallback);
-    return listToStr(list, 'nameCompany');
-}
-function getGenres(tx, idGame) {
-    var sql = "SELECT tp.nameGenre FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == " + idGame + ";";
-    var list = tx.executeSql(sql, [], returnList, errorCallback);
-    return listToStr(list, 'nameGenre');
+//Get string for platforms and put it in elementId of document
+function getPlatforms(game, elementId,limit = 20) {
+    var platforms = ""
+    platforms = db.transaction(function (tx) {
+        var sql = "SELECT tp.namePlatform as name FROM TGamePlatforms AS tgp, TPlatforms AS tp WHERE tp.idPlatform == tgp.idPlatform AND tgp.idGame == " + game.idGame + ";";
+        
+        tx.executeSql(sql, [], function (tx, results) {
+            platforms =returnList(results);
+        }, errorCallback);
+
+    }, errorCallback, function () {
+        document.getElementById(elementId).innerText = limitNbChar(platforms,limit);
+    });
 }
 
-function returnList(tx, results) {
+//Get string for modes and put it in elementId of document
+function getModes(game, elementId,limit= 20) {
+    var modes = ""
+    modes = db.transaction(function (tx) {
+        var sql = "SELECT tp.nameMode as name FROM TGameModes AS tgm, TModes AS tp WHERE tp.idMode == tgm.idMode AND tgm.idGame == " + game.idGame + ";";
+        tx.executeSql(sql, [], function (tx, results) {
+            modes = returnList(results);
+        }, errorCallback);
+    }, errorCallback, function () {
+        document.getElementById(elementId).innerText = limitNbChar(modes,limit);
+    });
+}
+
+//Get string for companies and put it in elementId of document
+function getCompanies(game, elementId,limit=20) {
+    var companies = ""
+    companies = db.transaction(function (tx) {
+        var sql = "SELECT tp.nameCompany as name FROM TGameCompanies AS tgc, TCompanies AS tp WHERE tp.idCompany == tgc.idCompany AND tgc.idGame == " + game.idGame + ";";
+        tx.executeSql(sql, [], function (tx, results) {
+            companies = returnList(results);
+        }, errorCallback);
+    }, errorCallback, function () {
+        document.getElementById(elementId).innerText = limitNbChar(companies,limit);
+    });
+}
+//Get string for genres and put it in elementId of document
+function getGenres(game, elementId,limit=20) {
+    var genres = ""
+    genres = db.transaction(function (tx) {
+        var sql = "SELECT tp.nameGenre as name FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == " + game.idGame + ";";
+        tx.executeSql(sql, [], function (tx, results) {
+            genres = returnList(results);
+        }, errorCallback);
+    }, errorCallback, function () {
+        document.getElementById(elementId).innerText = limitNbChar(genres,limit);
+    });
+}
+
+
+function returnList(results) {
     var list = [];
     for (let i = 0; i < results.rows.length; i++) {
-        list.push(results.rows.item(i));
+        list.push(decodeURI(results.rows.item(i).name));
     }
-    return list;
+    return listToStr(list);
 }
-function listToStr(list, field) {
+
+function listToStr(list) {
     var str = "";
     if (list != undefined) {
         list.forEach(el => {
-            str += el[field] + ',';
+            str += el + ',';
         });
         return str.substring(0, str.length - 1);
     } else {
         return str;
     }
 }
+
+

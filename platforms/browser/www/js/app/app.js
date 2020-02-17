@@ -7,81 +7,74 @@ var app = new Framework7({
   id: 'net.gaelmrt.gamedb',
   // Add default routes
   // see https://blog.framework7.io/mastering-v2-router-958ea2dbd24f
-  routes : [
+  routes: [
     {
       path: '/',
-      component: '../pages/home.f7.html',
+      url: './home.html',
       on: {
         pageAfterIn: function (e, page) {
           GetHomeHTML();
         }
-      }  
+      }
     },
     {
-      path: '/actual-games/',
-      component: '../pages/actual-games.f7.html',
+      path: '/index.html',
+      url: './home.html',
       on: {
         pageAfterIn: function (e, page) {
-          GetActualHTML();
+          GetHomeHTML();
         }
-      }  
+      }
     },
     {
-      path: '/all-games/',
-      component: '../pages/all-games.f7.html',
+      path: '/all/',
+      url: './all.html',
       on: {
         pageAfterIn: function (e, page) {
           GetAllHTML();
         }
-      }  
+      }
     },
     {
-      path: '/followed-games/',
-      component: '../pages/followed-games.f7.html',
+      path: '/followed/',
+      url: './followed.html',
       on: {
         pageAfterIn: function (e, page) {
-          GetHomeHTML();
+          GetFollowedHTML();
         }
-      }  
+      }
+    },
+    {
+      path: '/actual/',
+      url: './actual.html',
+      on: {
+        pageAfterIn: function (e, page) {
+          GetActualHTML();
+        }
+      }
     },
     {
       path: '/game/:id/',
-      component: '../pages/game.f7.html',
+      url: './game.html',
       on: {
         pageAfterIn: function (e, page) {
-          GetHomeHTML();
+          GetSingleGame(page.route.params.id);
         }
-      }  
-    },
-    {
-      path: '/search/:search/',
-      component: '../pages/search-results.f7.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetHomeHTML();
-        }
-      }  
-    },
-    {
-      path: '/search/',
-      component: '../pages/search.f7.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetHomeHTML();
-        }
-      }  
+      }
     },
     {
       path: '(.*)',
-      component: '../pages/404.f7.html',
+      component: './pages/404.f7.html',
       on: {
         pageAfterIn: function (e, page) {
-          GetHomeHTML();
-        }
-      }  
+          console.log(page);
+        },
+      }
     },
   ],
   // ... other parameters
 });
 
 var mainView = app.views.create('.view-main');
+
+GetHomeHTML();

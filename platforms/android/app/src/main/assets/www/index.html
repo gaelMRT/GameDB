@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <!-- Required meta tags-->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <!-- Color theme for statusbar -->
-      <meta name="theme-color" content="#2196f3">
-      <!-- Your app title -->
-      <title>My App Test 2019</title>
-      <!-- Path to Framework7 Library CSS -->
-      <link rel="stylesheet" href="css/f7/framework7.bundle.min.css">
-      <link rel="stylesheet" href="css/f7/framework7-icons.css">
-      <!-- Path to your custom app styles-->
-      <link rel="stylesheet" href="css/app/my-app.css">
-   </head>
-   <body>
-      <!-- App root element -->
-      <div id="app">
-         <!-- Status bar overlay for fullscreen mode-->
-         <div class="statusbar"></div>
-         <div class="panel panel-left panel-reveal panel-init" data-swipe="true">
-            ... panel content goes here ...
-         </div>
-         <!-- Your main view, should have "view-main" class -->
-         <div class="view view-main">
-            <!-- Initial Page, "data-name" contains page name -->
-            <div data-name="home" class="page">
-               <!-- Top Navbar -->
-               <div class="navbar">
-                  <div class="navbar-inner">
-                     <div class="title">Awesome App</div>
-                  </div>
-               </div>
-               <!-- Toolbar -->
-               <div class="toolbar">
-                  <div class="toolbar-inner">
-                     <!-- Toolbar links -->
-                     <a href="#" class="link">Link 1</a>
-                     <a href="#" class="link">Link 2</a>
-                  </div>
-               </div>
-               <!-- Scrollable page content -->
-               <div class="page-content">
-                  <p>Page content goes here</p>
-                  <!--slider -->
-                  <div class="block-title">Volume</div>
-                  <div class="list simple-list">
-                     <ul>
-                        <li>
-                           <div class="item-cell width-auto flex-shrink-0">
-                              <i class="icon f7-icons ">volume_mute_fill</i>        
-                           </div>
-                           <div class="item-cell flex-shrink-3">
-                              <!-- range slider -->
-                              <div class="range-slider range-slider-init">
-                                 <input type="range" min="0" max="100" step="1" value="10">
-                              </div>
-                           </div>
-                           <div class="item-cell width-auto flex-shrink-0">
-                              <i class="icon f7-icons">volume_fill</i>        
-                           </div>
-                        </li>
-                     </ul>
-                  </div>
-                  <!-- end of slider -->
-                  <button class="button col" onclick="app.panel.open('left')">Button</button>
-                  <!-- Link to another page -->
-                  <a href="/about/">About app</a>
-               </div>
+
+<head>
+   <!-- Required meta tags-->
+   <meta http-equiv="Content-Security-Policy"
+      content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+   <meta charset="utf-8">
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <!-- Color theme for statusbar -->
+   <meta name="theme-color" content="#007aff">
+   <!-- Your app title -->
+   <title>GameDB</title>
+   <!-- Path to Framework7 Library CSS -->
+   <link rel="stylesheet" href="css/f7/framework7.bundle.min.css">
+   <link rel="stylesheet" href="css/f7/framework7-icons.css">
+   <!-- Path to your custom app styles-->
+   <link rel="stylesheet" href="css/app/my-app.css">
+</head>
+
+<body>
+   <!-- App root element -->
+   <div id="app">
+
+      <!-- Views/Tabs container -->
+      <div class="views tabs safe-areas">
+         <!-- Tabbar for switching views-tabs -->
+         <div class="toolbar toolbar-bottom tabbar-labels">
+            <div class="toolbar-inner">
+               <a href="/all/" class="link">
+                  <i class="icon f7-icons">square_list_fill</i>
+                  <span class="tabbar-label">All</span>
+               </a>
+               <a href="/actual/" class="link">
+                  <i class="icon f7-icons">square_list_fill</i>
+                  <span class="tabbar-label">Actual</span>
+               </a>
+               <a href="/" class="link tab-link-active">
+                  <i class="icon f7-icons">house_fill</i>
+                  <span class="tabbar-label">Home</span>
+               </a>
+               <a href="/followed/" class="link">
+                  <i class="icon f7-icons">star</i>
+                  <span class="tabbar-label">Favorites</span>
+               </a>
             </div>
          </div>
+
+         <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+         <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
+            <!-- Home page will be loaded here dynamically from / route -->
+         </div>
+
+         <!-- All View -->
+         <div id="view-all" class="view view-init tab" data-view="all" data-url="/all/">
+            <!-- Catalog page will be loaded here dynamically from /all/ route -->
+         </div>
+
+         <!-- Actual View -->
+         <div id="view-actual" class="view view-init tab" data-view="actual" data-url="/actual/">
+            <!-- Settings page will be loaded here dynamically from /actual/ route -->
+         </div>
+
+         <!-- Favorites View -->
+         <div id="view-followed" class="view view-init tab" data-view="followed" data-url="/followed/">
+            <!-- Settings page will be loaded here dynamically from /followed/ route -->
+         </div>
+
       </div>
-      <script type="text/javascript" src="cordova.js"></script>
-      <!-- Path to Framework7 Library JS-->
-      <script type="text/javascript" src="js/f7/framework7.bundle.min.js"></script>
-      <!-- Path to your app js-->
-      <script type="text/javascript" src="js/app/app.js"></script>      
-   </body>
+
+
+   </div>
+   <script type="text/javascript" src="js/customFunc.js"></script>
+   <script type="text/javascript" src="js/db.js"></script>
+   <!-- Path to Framework7 Library JS-->
+   <script type="text/javascript" src="js/f7/framework7.bundle.min.js"></script>
+   <!-- Path to your app js-->
+   <script type="text/javascript" src="js/app/app.js"></script>
+</body>
+
 </html>

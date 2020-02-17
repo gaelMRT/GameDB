@@ -23,7 +23,6 @@
 <body>
    <!-- App root element -->
    <div id="app">
-
       <!-- Views/Tabs container -->
       <div class="views tabs safe-areas">
          <!-- Tabbar for switching views-tabs -->
@@ -38,7 +37,7 @@
                   <span class="tabbar-label">Actual</span>
                </a>
                <a href="/" class="link tab-link-active">
-                  <i class="icon f7-icons">house_fill</i>
+                  <i class="icon f7-icons">house</i>
                   <span class="tabbar-label">Home</span>
                </a>
                <a href="/followed/" class="link">
@@ -47,27 +46,38 @@
                </a>
             </div>
          </div>
+         <!-- Your main view, should have "view-main" class -->
+         <div class="view view-main">
+            <!-- Initial Page, "data-name" contains page name -->
+            <div class="page" data-name="home">
 
-         <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-         <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
-            <!-- Home page will be loaded here dynamically from / route -->
+               <!-- Top Navbar -->
+               <div class="navbar ">
+                  <div class="navbar-bg"></div>
+                  <div class="navbar-inner">
+                     <div class="title">
+                        <div class="title-large-text">GameDB</div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Scrollable page content-->
+               <div class="page-content">
+                  <div class="block">
+                     <div class="block-title">Actual Games</div>
+                     <div class="row" id="actualGames">
+                     </div>
+                  </div>
+
+
+                  <div class="block">
+                     <div class="block-title">Followed Games</div>
+                     <div class="row" id="followedGames">
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
-
-         <!-- All View -->
-         <div id="view-all" class="view view-init tab" data-view="all" data-url="/all/">
-            <!-- Catalog page will be loaded here dynamically from /all/ route -->
-         </div>
-
-         <!-- Actual View -->
-         <div id="view-actual" class="view view-init tab" data-view="actual" data-url="/actual/">
-            <!-- Settings page will be loaded here dynamically from /actual/ route -->
-         </div>
-
-         <!-- Favorites View -->
-         <div id="view-followed" class="view view-init tab" data-view="followed" data-url="/followed/">
-            <!-- Settings page will be loaded here dynamically from /followed/ route -->
-         </div>
-
       </div>
 
 

@@ -21,6 +21,7 @@
 </head>
 
 <body>
+   <!-- App root element -->
    <div id="app">
 
       <!-- Views/Tabs container -->
@@ -28,30 +29,21 @@
          <!-- Tabbar for switching views-tabs -->
          <div class="toolbar toolbar-bottom tabbar-labels">
             <div class="toolbar-inner">
-               <a href="#view-all" class="tab-link">
-                  <i class="icon f7-icons if-not-md">square_list_fill</i>
-                  <i class="icon material-icons if-md">view_list</i>
+               <a href="/all/" class="link">
+                  <i class="icon f7-icons">square_list_fill</i>
                   <span class="tabbar-label">All</span>
                </a>
-               <a href="#view-actual" class="tab-link">
-                  <i class="icon f7-icons if-not-md">square_list_fill</i>
-                  <i class="icon material-icons if-md">view_list</i>
+               <a href="/actual/" class="link">
+                  <i class="icon f7-icons">square_list_fill</i>
                   <span class="tabbar-label">Actual</span>
                </a>
-               <a href="#view-home" class="tab-link tab-link-active">
-                  <i class="icon f7-icons if-not-md">house_fill</i>
-                  <i class="icon material-icons if-md">home</i>
+               <a href="/" class="link tab-link-active">
+                  <i class="icon f7-icons">house_fill</i>
                   <span class="tabbar-label">Home</span>
                </a>
-               <a href="#view-followed" class="tab-link">
-                  <i class="icon f7-icons if-not-md">star</i>
-                  <i class="icon material-icons if-md">star</i>
+               <a href="/followed/" class="link">
+                  <i class="icon f7-icons">star</i>
                   <span class="tabbar-label">Favorites</span>
-               </a>
-               <a href="#view-search" class="tab-link">
-                  <i class="icon f7-icons if-not-md">search</i>
-                  <i class="icon material-icons if-md">search</i>
-                  <span class="tabbar-label">Search</span>
                </a>
             </div>
          </div>
@@ -62,93 +54,26 @@
          </div>
 
          <!-- All View -->
-         <div id="view-all" class="view view-init tab" data-view="all-games" data-url="/all-games/">
-            <!-- Catalog page will be loaded here dynamically from /all-games/ route -->
+         <div id="view-all" class="view view-init tab" data-view="all" data-url="/all/">
+            <!-- Catalog page will be loaded here dynamically from /all/ route -->
          </div>
 
          <!-- Actual View -->
-         <div id="view-actual" class="view view-init tab" data-view="actual-games" data-url="/actual-games/">
-            <!-- Settings page will be loaded here dynamically from /actual-games/ route -->
+         <div id="view-actual" class="view view-init tab" data-view="actual" data-url="/actual/">
+            <!-- Settings page will be loaded here dynamically from /actual/ route -->
          </div>
 
          <!-- Favorites View -->
-         <div id="view-followed" class="view view-init tab" data-view="followed-games" data-url="/followed-games/">
-            <!-- Settings page will be loaded here dynamically from /followed-games/ route -->
-         </div>
-
-         <!-- Search View -->
-         <div id="view-search" class="view view-init tab" data-view="search" data-url="/search/">
-            <!-- Settings page will be loaded here dynamically from /search/ route -->
+         <div id="view-followed" class="view view-init tab" data-view="followed" data-url="/followed/">
+            <!-- Settings page will be loaded here dynamically from /followed/ route -->
          </div>
 
       </div>
 
 
-      <!-- Popup -->
-      <div class="popup" id="my-popup">
-         <div class="view">
-            <div class="page">
-               <div class="navbar">
-                  <div class="navbar-bg"></div>
-                  <div class="navbar-inner">
-                     <div class="title">Popup</div>
-                     <div class="right">
-                        <a href="#" class="link popup-close">Close</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="page-content">
-                  <div class="block">
-                     <p>Popup content goes here.</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <!-- Login Screen -->
-      <div class="login-screen" id="my-login-screen">
-         <div class="view">
-            <div class="page">
-               <div class="page-content login-screen-content">
-                  <div class="login-screen-title">Login</div>
-                  <div class="list">
-                     <ul>
-                        <li class="item-content item-input">
-                           <div class="item-inner">
-                              <div class="item-title item-label">Username</div>
-                              <div class="item-input-wrap">
-                                 <input type="text" name="username" placeholder="Your username">
-                              </div>
-                           </div>
-                        </li>
-                        <li class="item-content item-input">
-                           <div class="item-inner">
-                              <div class="item-title item-label">Password</div>
-                              <div class="item-input-wrap">
-                                 <input type="password" name="password" placeholder="Your password">
-                              </div>
-                           </div>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="list">
-                     <ul>
-                        <li>
-                           <a href="#" class="item-link list-button login-button">Sign In</a>
-                        </li>
-                     </ul>
-                     <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login
-                        Screen</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
    </div>
    <script type="text/javascript" src="js/customFunc.js"></script>
    <script type="text/javascript" src="js/db.js"></script>
-   <script type="text/javascript" src="cordova.js"></script>
    <!-- Path to Framework7 Library JS-->
    <script type="text/javascript" src="js/f7/framework7.bundle.min.js"></script>
    <!-- Path to your app js-->
