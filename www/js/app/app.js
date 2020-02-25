@@ -15,16 +15,8 @@ var app = new Framework7({
         pageAfterIn: function (e, page) {
           GetHomeHTML();
         }
-      }
-    },
-    {
-      path: '/index.html',
-      url: './home.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetHomeHTML();
-        }
-      }
+      },
+      alias: ['/index.html']
     },
     {
       path: '/all/',
@@ -63,11 +55,11 @@ var app = new Framework7({
       }
     },
     {
-      path: '(.*)',
-      component: './pages/404.f7.html',
+      path: '/img/platforms/:name',
+      url: './img/platforms/{{name}}',
       on: {
-        pageAfterIn: function (e, page) {
-          console.log(page);
+        beforeEnter: function(e,page){
+          console.log("Img load");
         },
       }
     },

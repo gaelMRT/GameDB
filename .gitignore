@@ -1,0 +1,167 @@
+platforms/browser/www/actual.html
+platforms/browser/www/all.html
+platforms/browser/www/followed.html
+platforms/browser/www/game.html
+platforms/browser/www/home.html
+platforms/browser/www/index.html
+platforms/browser/www/css/app/my-app.css
+platforms/browser/www/img/genres/Adventure.svg
+platforms/browser/www/img/genres/Arcade.svg
+platforms/browser/www/img/genres/Casual.svg
+platforms/browser/www/img/genres/Fighting.svg
+platforms/browser/www/img/genres/Indie.svg
+platforms/browser/www/img/genres/Music.svg
+platforms/browser/www/img/genres/Platform.svg
+platforms/browser/www/img/genres/Point-and-click.svg
+platforms/browser/www/img/genres/Puzzle.svg
+platforms/browser/www/img/genres/QuizTrivia.svg
+platforms/browser/www/img/genres/Racing.svg
+platforms/browser/www/img/genres/Role-playing (RPG).svg
+platforms/browser/www/img/genres/Shooter.svg
+platforms/browser/www/img/genres/Sport.svg
+platforms/browser/www/img/genres/Strategy.svg
+platforms/browser/www/img/genres/Turn-based strategy (TBS).svg
+platforms/browser/www/img/genres/Visual Novel.svg
+platforms/browser/www/img/genres/Hack and slash/Beat 'em up.svg
+platforms/browser/www/img/platforms/Android.svg
+platforms/browser/www/img/platforms/iOS.svg
+platforms/browser/www/img/platforms/Linux.svg
+platforms/browser/www/img/platforms/PC.svg
+platforms/browser/www/img/platforms/Playstation.svg
+platforms/browser/www/img/platforms/PS4.svg
+platforms/browser/www/img/platforms/Switch.svg
+platforms/browser/www/img/platforms/VR.svg
+platforms/browser/www/img/platforms/Wii.svg
+platforms/browser/www/img/platforms/WiiU.svg
+platforms/browser/www/img/platforms/XONE.svg
+platforms/browser/www/js/customFunc.js
+platforms/browser/www/js/db.js
+platforms/browser/www/js/app/app.js
+platforms/browser/www/static/genres/Adventure.svg
+platforms/browser/www/static/genres/Arcade.svg
+platforms/browser/www/static/genres/Casual.svg
+platforms/browser/www/static/genres/Fighting.svg
+platforms/browser/www/static/genres/Indie.svg
+platforms/browser/www/static/genres/Music.svg
+platforms/browser/www/static/genres/Platform.svg
+platforms/browser/www/static/genres/Point-and-click.svg
+platforms/browser/www/static/genres/Puzzle.svg
+platforms/browser/www/static/genres/QuizTrivia.svg
+platforms/browser/www/static/genres/Racing.svg
+platforms/browser/www/static/genres/Real Time Strategy (RTS).svg
+platforms/browser/www/static/genres/Role-playing (RPG).svg
+platforms/browser/www/static/genres/Shooter.svg
+platforms/browser/www/static/genres/Simulator.svg
+platforms/browser/www/static/genres/Sport.svg
+platforms/browser/www/static/genres/Strategy.svg
+platforms/browser/www/static/genres/Tactical.svg
+platforms/browser/www/static/genres/Turn-based strategy (TBS).svg
+platforms/browser/www/static/genres/Visual Novel.svg
+platforms/browser/www/static/genres/Hack and slash/Beat 'em up.svg
+platforms/browser/www/static/platforms/Android.svg
+platforms/browser/www/static/platforms/iOS.svg
+platforms/browser/www/static/platforms/Linux.svg
+platforms/browser/www/static/platforms/Mac.svg
+platforms/browser/www/static/platforms/PC.svg
+platforms/browser/www/static/platforms/Playstation VR.svg
+platforms/browser/www/static/platforms/Playstation.svg
+platforms/browser/www/static/platforms/PS4.svg
+platforms/browser/www/static/platforms/Switch.svg
+platforms/browser/www/static/platforms/VR.svg
+platforms/browser/www/static/platforms/Wii.svg
+platforms/browser/www/static/platforms/WiiU.svg
+platforms/browser/www/static/platforms/XONE.svg
+platforms/android/settings.gradle
+platforms/android/app/build.gradle
+platforms/android/app/src/main/assets/www/game.html
+platforms/android/app/src/main/assets/www/css/app/my-app.css
+platforms/android/app/src/main/assets/www/img/genres/Adventure.svg
+platforms/android/app/src/main/assets/www/img/genres/Arcade.svg
+platforms/android/app/src/main/assets/www/img/genres/Casual.svg
+platforms/android/app/src/main/assets/www/img/genres/Fighting.svg
+platforms/android/app/src/main/assets/www/img/genres/Indie.svg
+platforms/android/app/src/main/assets/www/img/genres/Music.svg
+platforms/android/app/src/main/assets/www/img/genres/Platform.svg
+platforms/android/app/src/main/assets/www/img/genres/Point-and-click.svg
+platforms/android/app/src/main/assets/www/img/genres/Puzzle.svg
+platforms/android/app/src/main/assets/www/img/genres/QuizTrivia.svg
+platforms/android/app/src/main/assets/www/img/genres/Racing.svg
+platforms/android/app/src/main/assets/www/img/genres/Role-playing (RPG).svg
+platforms/android/app/src/main/assets/www/img/genres/Shooter.svg
+platforms/android/app/src/main/assets/www/img/genres/Sport.svg
+platforms/android/app/src/main/assets/www/img/genres/Strategy.svg
+platforms/android/app/src/main/assets/www/img/genres/Turn-based strategy (TBS).svg
+platforms/android/app/src/main/assets/www/img/genres/Visual Novel.svg
+platforms/android/app/src/main/assets/www/img/genres/Hack and slash/Beat 'em up.svg
+platforms/android/app/src/main/assets/www/img/platforms/Android.svg
+platforms/android/app/src/main/assets/www/img/platforms/iOS.svg
+platforms/android/app/src/main/assets/www/img/platforms/Linux.svg
+platforms/android/app/src/main/assets/www/img/platforms/PC.svg
+platforms/android/app/src/main/assets/www/img/platforms/Playstation.svg
+platforms/android/app/src/main/assets/www/img/platforms/PS4.svg
+platforms/android/app/src/main/assets/www/img/platforms/Switch.svg
+platforms/android/app/src/main/assets/www/img/platforms/VR.svg
+platforms/android/app/src/main/assets/www/img/platforms/Wii.svg
+platforms/android/app/src/main/assets/www/img/platforms/WiiU.svg
+platforms/android/app/src/main/assets/www/img/platforms/XONE.svg
+platforms/android/app/src/main/assets/www/js/customFunc.js
+platforms/android/app/src/main/assets/www/js/db.js
+platforms/android/app/src/main/assets/www/js/app/app.js
+platforms/android/app/src/main/assets/www/static/genres/Adventure.svg
+platforms/android/app/src/main/assets/www/static/genres/Arcade.svg
+platforms/android/app/src/main/assets/www/static/genres/Casual.svg
+platforms/android/app/src/main/assets/www/static/genres/Fighting.svg
+platforms/android/app/src/main/assets/www/static/genres/Indie.svg
+platforms/android/app/src/main/assets/www/static/genres/Music.svg
+platforms/android/app/src/main/assets/www/static/genres/Platform.svg
+platforms/android/app/src/main/assets/www/static/genres/Point-and-click.svg
+platforms/android/app/src/main/assets/www/static/genres/Puzzle.svg
+platforms/android/app/src/main/assets/www/static/genres/QuizTrivia.svg
+platforms/android/app/src/main/assets/www/static/genres/Racing.svg
+platforms/android/app/src/main/assets/www/static/genres/Real Time Strategy (RTS).svg
+platforms/android/app/src/main/assets/www/static/genres/Role-playing (RPG).svg
+platforms/android/app/src/main/assets/www/static/genres/Shooter.svg
+platforms/android/app/src/main/assets/www/static/genres/Simulator.svg
+platforms/android/app/src/main/assets/www/static/genres/Sport.svg
+platforms/android/app/src/main/assets/www/static/genres/Strategy.svg
+platforms/android/app/src/main/assets/www/static/genres/Tactical.svg
+platforms/android/app/src/main/assets/www/static/genres/Turn-based strategy (TBS).svg
+platforms/android/app/src/main/assets/www/static/genres/Visual Novel.svg
+platforms/android/app/src/main/assets/www/static/genres/Hack and slash/Beat 'em up.svg
+platforms/android/app/src/main/assets/www/static/platforms/Android.svg
+platforms/android/app/src/main/assets/www/static/platforms/iOS.svg
+platforms/android/app/src/main/assets/www/static/platforms/Linux.svg
+platforms/android/app/src/main/assets/www/static/platforms/Mac.svg
+platforms/android/app/src/main/assets/www/static/platforms/PC.svg
+platforms/android/app/src/main/assets/www/static/platforms/Playstation VR.svg
+platforms/android/app/src/main/assets/www/static/platforms/Playstation.svg
+platforms/android/app/src/main/assets/www/static/platforms/PS4.svg
+platforms/android/app/src/main/assets/www/static/platforms/Switch.svg
+platforms/android/app/src/main/assets/www/static/platforms/VR.svg
+platforms/android/app/src/main/assets/www/static/platforms/Wii.svg
+platforms/android/app/src/main/assets/www/static/platforms/WiiU.svg
+platforms/android/app/src/main/assets/www/static/platforms/XONE.svg
+platforms/android/settings.gradle
+platforms/android/app/build.gradle
+platforms/android/app/src/main/assets/www/game.html
+platforms/android/app/src/main/assets/www/css/app/my-app.css
+platforms/android/app/src/main/assets/www/js/customFunc.js
+platforms/android/app/src/main/assets/www/js/db.js
+platforms/android/app/src/main/assets/www/js/app/app.js
+platforms/android/settings.gradle
+platforms/android/app/build.gradle
+platforms/android/app/src/main/assets/www/game.html
+platforms/android/app/src/main/assets/www/css/app/my-app.css
+platforms/android/app/src/main/assets/www/js/customFunc.js
+platforms/android/app/src/main/assets/www/js/db.js
+platforms/android/app/src/main/assets/www/js/app/app.js
+platforms/browser/www/actual.html
+platforms/browser/www/all.html
+platforms/browser/www/followed.html
+platforms/browser/www/game.html
+platforms/browser/www/home.html
+platforms/browser/www/index.html
+platforms/browser/www/css/app/my-app.css
+platforms/browser/www/js/customFunc.js
+platforms/browser/www/js/db.js
+platforms/browser/www/js/app/app.js

@@ -5,6 +5,7 @@ const IMG_URL = "https://images.igdb.com/igdb/image/upload/t_cover_big/:imgId.jp
 const DEFAULT_IMG = "res/default-image.png";
 const DAYS_TO_MS = 24 * 60 * 60 * 1000;
 const NEEDED_FIELDS = "fields cover.image_id,name,summary,storyline,rating,popularity,first_release_date,genres.name,platforms.abbreviation,platforms.alternative_name,game_modes.name,involved_companies.company.name;";
+const MAX_ICONS = 2;
 
 var db = openDatabase('mrtGameDB', '1.0', 'mrtGameDB', 12 * 1024 * 1024);
 createDB();
@@ -12,19 +13,6 @@ populateDB();
 
 function createDB() {
     db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS TGames;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TFollowedGames ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TGenres ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TModes ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TPlatforms ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TCompanies ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TGameCompanies;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TGameGenres ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TGamePlatforms ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TGameModes ;', null, null, errorCallback);
-        tx.executeSql('DROP TABLE IF EXISTS TLastUpdated ;', null, null, errorCallback);
-
-
         tx.executeSql('CREATE TABLE IF NOT EXISTS TGames (idGame INTEGER PRIMARY KEY,imgId TEXT, nameGame TEXT NOT NULL, summary TEXT NOT NULL, storyline TEXT, rating DOUBLE,popularity DOUBLE, firstReleaseDate INTEGER);', null, null, errorCallback);
         tx.executeSql('CREATE TABLE IF NOT EXISTS TFollowedGames (idFollowedGame INTEGER PRIMARY KEY)', null, null, errorCallback);
         tx.executeSql('CREATE TABLE IF NOT EXISTS TGenres (idGenre INTEGER PRIMARY KEY, nameGenre TEXT NOT NULL)', null, null, errorCallback);
@@ -69,8 +57,9 @@ function populateDB() {
             }
             body += ";limit 500;";
 
-            /*
-            fetch('https://api-v3.igdb.com/games/', {
+
+            var sendUrl = 'https://api-v3.igdb.com/games/';
+            /*fetch(sendUrl, {
               method: "post",
               body: body,
               cache: 'default',
@@ -79,9 +68,7 @@ function populateDB() {
                 "Content-Type": "application/json"
               }
             })*/
-
-            var sendUrl = 'https://api-v3.igdb.com/games/';
-
+            
             var url = 'http://prox/public/?url=' + sendUrl + '&body=' + encodeURI(body).replace(/&/g, '%26');
 
 
@@ -92,7 +79,7 @@ function populateDB() {
             }).then(function (response) {
                 db.transaction(function (tx) {
                     response.forEach(row => {
-                        var sql = "INSERT OR REPLACE INTO TGames (idGame,imgId,nameGame,rating,popularity,firstReleaseDate,summary,storyline) VALUES (:id,\":imgId\",\":name\",:rate,:pop,:rel,\":sum\",\":sto\");";
+                        let sql = "INSERT OR REPLACE INTO TGames (idGame,imgId,nameGame,rating,popularity,firstReleaseDate,summary,storyline) VALUES (:id,\":imgId\",\":name\",:rate,:pop,:rel,\":sum\",\":sto\");";
                         sql = sql.replace(':id', row.id);
                         if (row.cover != undefined) {
                             sql = sql.replace(':imgId', IMG_URL.replace(':imgId', row.cover.image_id));
@@ -196,81 +183,79 @@ function populateDB() {
     });
 }
 
-//Import the games from the database
-function importGames(daysBeforeAfter = DAYS_ACTUAL_AFTER_BEFORE) {
-    var games = [];
-    db.transaction(function (tx) {
-        tx.executeSql('SELECT * FROM TGames;'
-            , [], function (tx, results) {
-                for (let i = 0; i < results.rows.length; i++) {
-                    var row = results.rows.item(i);
-                    getPlatforms(tx, row);
-                    getGenres(tx, row);
-                    getCompanies(tx, row);
-                    getModes(tx, row);
-                    games.push(row);
-                }
-            }, errorCallback);
-    }, errorCallback, function () {
-        games.forEach(element => {
-            app.data.actualGames.push(element);
-            app.data.games.push(element);
-        });
-
-    });
-
-}//end importGames
-
 //Get string for platforms and put it in elementId of document
-function getPlatforms(game, elementId,limit = 20) {
+function getPlatforms(game, elementId,icons = true) {
     var platforms = ""
-    platforms = db.transaction(function (tx) {
+    db.transaction(function (tx) {
         var sql = "SELECT tp.namePlatform as name FROM TGamePlatforms AS tgp, TPlatforms AS tp WHERE tp.idPlatform == tgp.idPlatform AND tgp.idGame == " + game.idGame + ";";
         
         tx.executeSql(sql, [], function (tx, results) {
-            platforms =returnList(results);
+            let list = returnList(results);
+            if(icons){
+                for (let i = 0; i < list.length && i < MAX_ICONS; i++) {
+                    let result = decodeURI(list[i]);
+                    platforms += '<img class="myIcon" src="./static/platforms/'+result+'.svg" alt="'+result+'"/>';   
+                }
+                if(list.length > MAX_ICONS){
+                    platforms+= "...";
+                }
+            }else{
+                platforms = listToStr(list);
+            }
         }, errorCallback);
 
     }, errorCallback, function () {
-        document.getElementById(elementId).innerText = limitNbChar(platforms,limit);
+        document.getElementById(elementId).innerHTML = platforms;
+    });
+}
+//Get string for genres and put it in elementId of document
+function getGenres(game, elementId,icons = true) {
+    var genres = ""
+    db.transaction(function (tx) {
+        var sql = "SELECT tp.nameGenre as name FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == " + game.idGame + ";";
+        tx.executeSql(sql, [], function (tx, results) {
+            let list = returnList(results);
+            if(icons){
+                for (let i = 0; i < list.length && i < MAX_ICONS; i++) {
+                    let result = decodeURI(list[i]);
+                    genres += '<img class="myIcon" src="./static/genres/'+result+'.svg" alt="'+result+'"/>';
+                    console.log(list[i]);
+                }
+                if(list.length > MAX_ICONS){
+                    genres+= "...";
+                }
+            }else{
+                genres = listToStr(list);
+            }
+        }, errorCallback);
+    }, errorCallback, function () {
+        document.getElementById(elementId).innerHTML = genres;
     });
 }
 
 //Get string for modes and put it in elementId of document
 function getModes(game, elementId,limit= 20) {
     var modes = ""
-    modes = db.transaction(function (tx) {
+    db.transaction(function (tx) {
         var sql = "SELECT tp.nameMode as name FROM TGameModes AS tgm, TModes AS tp WHERE tp.idMode == tgm.idMode AND tgm.idGame == " + game.idGame + ";";
         tx.executeSql(sql, [], function (tx, results) {
             modes = returnList(results);
         }, errorCallback);
     }, errorCallback, function () {
-        document.getElementById(elementId).innerText = limitNbChar(modes,limit);
+        document.getElementById(elementId).innerHTML = limitNbChar(modes,limit);
     });
 }
 
 //Get string for companies and put it in elementId of document
 function getCompanies(game, elementId,limit=20) {
     var companies = ""
-    companies = db.transaction(function (tx) {
+    db.transaction(function (tx) {
         var sql = "SELECT tp.nameCompany as name FROM TGameCompanies AS tgc, TCompanies AS tp WHERE tp.idCompany == tgc.idCompany AND tgc.idGame == " + game.idGame + ";";
         tx.executeSql(sql, [], function (tx, results) {
             companies = returnList(results);
         }, errorCallback);
     }, errorCallback, function () {
-        document.getElementById(elementId).innerText = limitNbChar(companies,limit);
-    });
-}
-//Get string for genres and put it in elementId of document
-function getGenres(game, elementId,limit=20) {
-    var genres = ""
-    genres = db.transaction(function (tx) {
-        var sql = "SELECT tp.nameGenre as name FROM TGameGenres AS tgg, TGenres AS tp WHERE tp.idGenre == tgg.idGenre AND tgg.idGame == " + game.idGame + ";";
-        tx.executeSql(sql, [], function (tx, results) {
-            genres = returnList(results);
-        }, errorCallback);
-    }, errorCallback, function () {
-        document.getElementById(elementId).innerText = limitNbChar(genres,limit);
+        document.getElementById(elementId).innerHTML = limitNbChar(companies,limit);
     });
 }
 
@@ -280,7 +265,7 @@ function returnList(results) {
     for (let i = 0; i < results.rows.length; i++) {
         list.push(decodeURI(results.rows.item(i).name));
     }
-    return listToStr(list);
+    return list;
 }
 
 function listToStr(list) {
@@ -295,4 +280,14 @@ function listToStr(list) {
     }
 }
 
-
+function fileExists(fileUrl){
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', fileUrl, false);
+    xhr.send();
+     
+    if (xhr.status == "404") {
+        return false;
+    } else {
+        return true;
+    }
+}
