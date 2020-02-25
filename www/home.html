@@ -22,16 +22,12 @@
 
 <body>
    <!-- App root element -->
-   <div id="app">
+   <div id="f7app">
       <!-- Views/Tabs container -->
       <div class="views tabs safe-areas">
          <!-- Tabbar for switching views-tabs -->
          <div class="toolbar toolbar-bottom tabbar-labels">
             <div class="toolbar-inner">
-               <a href="/all/" class="link">
-                  <i class="icon f7-icons">square_list_fill</i>
-                  <span class="tabbar-label">All</span>
-               </a>
                <a href="/actual/" class="link">
                   <i class="icon f7-icons">square_list_fill</i>
                   <span class="tabbar-label">Actual</span>
@@ -67,6 +63,7 @@
                      <div class="block-title">Actual Games</div>
                      <div class="row" id="actualGames">
                      </div>
+                     <div id="moreActual"><a href="/actual/">See more ...</a></div>
                   </div>
 
 
@@ -74,6 +71,7 @@
                      <div class="block-title">Followed Games</div>
                      <div class="row" id="followedGames">
                      </div>
+                     <div id="moreFollowed"><a href="/followed/">See more ...</a></div>
                   </div>
                </div>
             </div>
@@ -82,6 +80,10 @@
 
 
    </div>
+   <!-- Cordova -->
+   <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+   <script type="text/javascript" src="js/index.js"></script>
+   <!-- Custom functions -->
    <script type="text/javascript" src="js/customFunc.js"></script>
    <script type="text/javascript" src="js/db.js"></script>
    <!-- Path to Framework7 Library JS-->

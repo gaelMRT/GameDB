@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "net.gaelmrt.gamedb"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "net.gaelmrt.gamedb"
     }
   },
   "dependent_plugins": {}

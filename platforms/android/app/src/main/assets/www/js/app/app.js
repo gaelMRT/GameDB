@@ -1,6 +1,6 @@
-var app = new Framework7({
+var f7app = new Framework7({
   // App root element
-  root: '#app',
+  root: '#f7app',
   // App Name
   name: 'GameDB',
   // App id
@@ -15,25 +15,8 @@ var app = new Framework7({
         pageAfterIn: function (e, page) {
           GetHomeHTML();
         }
-      }
-    },
-    {
-      path: '/index.html',
-      url: './home.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetHomeHTML();
-        }
-      }
-    },
-    {
-      path: '/all/',
-      url: './all.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetAllHTML();
-        }
-      }
+      },
+      alias: ['/index.html']
     },
     {
       path: '/followed/',
@@ -48,7 +31,7 @@ var app = new Framework7({
       path: '/actual/',
       url: './actual.html',
       on: {
-        pageAfterIn: function (e, page) {
+        pageBeforeIn: function (e, page) {
           GetActualHTML();
         }
       }
@@ -63,11 +46,11 @@ var app = new Framework7({
       }
     },
     {
-      path: '(.*)',
-      component: './pages/404.f7.html',
+      path: '/img/platforms/:name',
+      url: './img/platforms/{{name}}',
       on: {
-        pageAfterIn: function (e, page) {
-          console.log(page);
+        beforeEnter: function(e,page){
+          console.log("Img load");
         },
       }
     },
@@ -75,6 +58,6 @@ var app = new Framework7({
   // ... other parameters
 });
 
-var mainView = app.views.create('.view-main');
+var mainView = f7app.views.create('.view-main');
 
 GetHomeHTML();

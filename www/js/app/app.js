@@ -1,6 +1,6 @@
-var app = new Framework7({
+var f7app = new Framework7({
   // App root element
-  root: '#app',
+  root: '#f7app',
   // App Name
   name: 'GameDB',
   // App id
@@ -19,15 +19,6 @@ var app = new Framework7({
       alias: ['/index.html']
     },
     {
-      path: '/all/',
-      url: './all.html',
-      on: {
-        pageAfterIn: function (e, page) {
-          GetAllHTML();
-        }
-      }
-    },
-    {
       path: '/followed/',
       url: './followed.html',
       on: {
@@ -40,7 +31,7 @@ var app = new Framework7({
       path: '/actual/',
       url: './actual.html',
       on: {
-        pageAfterIn: function (e, page) {
+        pageBeforeIn: function (e, page) {
           GetActualHTML();
         }
       }
@@ -67,6 +58,4 @@ var app = new Framework7({
   // ... other parameters
 });
 
-var mainView = app.views.create('.view-main');
-
-GetHomeHTML();
+var mainView = f7app.views.create('.view-main');

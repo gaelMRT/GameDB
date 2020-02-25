@@ -22,17 +22,13 @@
 
 <body>
    <!-- App root element -->
-   <div id="app">
+   <div id="f7app">
 
       <!-- Views/Tabs container -->
       <div class="views tabs safe-areas">
          <!-- Tabbar for switching views-tabs -->
          <div class="toolbar toolbar-bottom tabbar-labels">
             <div class="toolbar-inner">
-               <a href="/all/" class="link">
-                  <i class="icon f7-icons">square_list_fill</i>
-                  <span class="tabbar-label">All</span>
-               </a>
                <a href="/actual/" class="link">
                   <i class="icon f7-icons">square_list_fill</i>
                   <span class="tabbar-label">Actual</span>
@@ -42,7 +38,7 @@
                   <span class="tabbar-label">Home</span>
                </a>
                <a href="/followed/" class="link">
-                  <i class="icon f7-icons">star</i>
+                  <i class="icon f7-icons">star_fill</i>
                   <span class="tabbar-label">Favorites</span>
                </a>
             </div>
@@ -51,11 +47,6 @@
          <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
          <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
             <!-- Home page will be loaded here dynamically from / route -->
-         </div>
-
-         <!-- All View -->
-         <div id="view-all" class="view view-init tab" data-view="all" data-url="/all/">
-            <!-- Catalog page will be loaded here dynamically from /all/ route -->
          </div>
 
          <!-- Actual View -->
@@ -72,6 +63,7 @@
 
 
    </div>
+   <script type="text/javascript" src="js/index.js"></script>
    <script type="text/javascript" src="js/customFunc.js"></script>
    <script type="text/javascript" src="js/db.js"></script>
    <!-- Path to Framework7 Library JS-->
