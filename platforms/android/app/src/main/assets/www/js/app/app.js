@@ -59,5 +59,3 @@ var f7app = new Framework7({
 });
 
 var mainView = f7app.views.create('.view-main');
-
-GetHomeHTML();

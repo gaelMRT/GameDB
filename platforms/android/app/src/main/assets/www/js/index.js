@@ -19,6 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
+        console.log("Construct");
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -28,6 +29,8 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         console.log("deviceReady");
+        createDB();
+        populateDB();
     },
 
 };

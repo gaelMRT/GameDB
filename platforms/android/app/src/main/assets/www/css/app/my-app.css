@@ -4,6 +4,12 @@ table{
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.block-header{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.25em;
+}
 th,td{
     border: 1px solid black;
 }
