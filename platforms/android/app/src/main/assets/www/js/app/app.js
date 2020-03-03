@@ -12,8 +12,11 @@ var f7app = new Framework7({
       path: '/',
       url: './home.html',
       on: {
-        pageAfterIn: function (e, page) {
+        pageBeforeIn: function (e, page) {
           GetHomeHTML();
+        },
+        pageBeforeOut: function(e,page){
+          lastPage = page.route.url;
         }
       },
       alias: ['/index.html']
@@ -22,8 +25,11 @@ var f7app = new Framework7({
       path: '/followed/',
       url: './followed.html',
       on: {
-        pageAfterIn: function (e, page) {
+        pageBeforeIn: function (e, page) {
           GetFollowedHTML();
+        },
+        pageBeforeOut: function(e,page){
+          lastPage = page.route.url;
         }
       }
     },
@@ -33,6 +39,9 @@ var f7app = new Framework7({
       on: {
         pageBeforeIn: function (e, page) {
           GetActualHTML();
+        },
+        pageBeforeOut: function(e,page){
+          lastPage = page.route.url;
         }
       }
     },
@@ -40,7 +49,7 @@ var f7app = new Framework7({
       path: '/game/:id/',
       url: './game.html',
       on: {
-        pageAfterIn: function (e, page) {
+        pageBeforeIn: function (e, page) {
           GetSingleGame(page.route.params.id);
         }
       }

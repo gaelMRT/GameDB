@@ -39,7 +39,7 @@ function populateDB() {
             } else {
                 let lastUpdate;
                 lastUpdate = results.rows.item(0);
-                if (Date.now() - lastUpdate.lastUpdated >= HOURS_BEFORE_CONNECTED_UPDATE * HOURS_TO_MS) {
+                if (Date.now() - lastUpdate.lastUpdated >= HOURS_BEFORE_CONNECTED_UPDATE * HOURS_TO_MS/1000) {
                     needPopulate = true;
                     console.log("Update because time");
                 }
@@ -84,7 +84,8 @@ function populateDB() {
                     cache: 'default',
                     headers: {
                         "user-key": "c364edc9293459fe126c3de23e9bf176",
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin":"*"
                     }
                 }).then(function (resp) {
                     return resp.json()

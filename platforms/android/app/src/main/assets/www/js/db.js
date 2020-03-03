@@ -39,7 +39,7 @@ function populateDB() {
             } else {
                 let lastUpdate;
                 lastUpdate = results.rows.item(0);
-                if (Date.now() - lastUpdate.lastUpdated >= HOURS_BEFORE_CONNECTED_UPDATE * HOURS_TO_MS) {
+                if (Date.now() - lastUpdate.lastUpdated >= HOURS_BEFORE_CONNECTED_UPDATE * HOURS_TO_MS/1000) {
                     needPopulate = true;
                     console.log("Update because time");
                 }

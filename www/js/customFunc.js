@@ -179,16 +179,15 @@ DATA TRANSFORMATIONS
 
 //Transform an array of game to a table
 function gamesArrayToTable(gameArray, prefix) {
-    let allG = "<tr><th>Name</th><th>Gen.</th><th>Pla.</th><th>Out in</th></tr>";
+    let allG = "<tr><th>Name</th><th>Gen.</th><th>Plat.</th></tr>";
     for (let i = 0; i < gameArray.length; i++) {
 
         let g = gameArray[i];
-        allG += '<tr>';
-        allG += '<td><a class="tableLink" href="/game/' + g.idGame + '/">' + limitNbChar(decodeURI(g.nameGame), NAME_LIMIT_CHARS) + '</a></td>';
         let remainingDays = remainingTo(g.firstReleaseDate);
+        allG += '<tr>';
+        allG += '<td><a class="tableLink" href="/game/' + g.idGame + '/">' + limitNbChar(decodeURI(g.nameGame), NAME_LIMIT_CHARS) +(remainingDays > 0 ? '[d-'+remainingDays+']' :"")+'</a></td>';
         allG += '<td><a class="tableLink" id="' + prefix + 'GenresGame' + g.idGame + '" href="/game/' + g.idGame + '/"></a></td>';
         allG += '<td><a class="tableLink" id="' + prefix + 'PlatformsGame' + g.idGame + '" href="/game/' + g.idGame + '/"></a></td>';
-        allG += '<td><a class="tableLink" href="/game/' + g.idGame + '/">' + (remainingDays > 0 ? remainingDays + " days" : "") + '</a></td>';
         allG += '</tr>'
 
     }

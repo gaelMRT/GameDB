@@ -1,3 +1,4 @@
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -21,8 +22,16 @@ var app = {
     initialize: function() {
         console.log("Construct");
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        document.addEventListener('backbutton',this.returnLast.bind(this),false);
+        document.addEventListener('menubutton',this.returnHome.bind(this),false);
     },
 
+    returnHome: function(){
+        mainView.router.navigate('/');
+    },
+    returnLast: function(){
+        mainView.router.navigate(lastPage);
+    },
     // deviceready Event Handler
     //
     // Bind any cordova events here. Common events are:
@@ -31,8 +40,10 @@ var app = {
         console.log("deviceReady");
         createDB();
         populateDB();
+        this.returnHome();
     },
 
 };
 
+var lastPage = '/';
 app.initialize();
