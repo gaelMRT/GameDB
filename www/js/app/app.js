@@ -1,4 +1,5 @@
 var f7app = new Framework7({
+  games: [],
   // App root element
   root: '#f7app',
   // App Name
@@ -12,7 +13,7 @@ var f7app = new Framework7({
       path: '/',
       url: './home.html',
       on: {
-        pageBeforeIn: function (e, page) {
+        pageAfterIn: function (e, page) {
           GetHomeHTML();
         },
         pageBeforeOut: function(e,page){

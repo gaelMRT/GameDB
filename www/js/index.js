@@ -40,6 +40,7 @@ var app = {
         console.log("deviceReady");
         createDB();
         populateDB();
+        getAllGames();
         this.returnHome();
     },
 
