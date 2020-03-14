@@ -26,22 +26,6 @@
       <!-- Views/Tabs container -->
       <div class="views tabs safe-areas">
          <!-- Tabbar for switching views-tabs -->
-         <div class="toolbar toolbar-bottom tabbar-labels">
-            <div class="toolbar-inner">
-               <a href="/actual/" class="link">
-                  <i class="icon f7-icons">square_list_fill</i>
-                  <span class="tabbar-label">Actual</span>
-               </a>
-               <a href="/" class="link tab-link-active">
-                  <i class="icon f7-icons">home</i>
-                  <span class="tabbar-label">Home</span>
-               </a>
-               <a href="/followed/" class="link">
-                  <i class="icon f7-icons">star_fill</i>
-                  <span class="tabbar-label">Favorites</span>
-               </a>
-            </div>
-         </div>
          <!-- Your main view, should have "view-main" class -->
          <div class="view view-main">
             <!-- Initial Page, "data-name" contains page name -->
@@ -61,17 +45,17 @@
                <div class="page-content">
                   <div class="block">
                      <div class="block-title">Actual Games</div>
-                     <div class="row" id="actualGames">
+                     <div class="row actualGames">
                      </div>
-                     <div id="moreActual"><a href="/actual/">See more ...</a></div>
+                     <div class="moreActual"><a href="/actual/">See more ...</a></div>
                   </div>
 
 
                   <div class="block">
                      <div class="block-title">Followed Games</div>
-                     <div class="row" id="followedGames">
+                     <div class="row followedGames">
                      </div>
-                     <div id="moreFollowed"><a href="/followed/">See more ...</a></div>
+                     <div class="moreFollowed"><a href="/followed/">See more ...</a></div>
                   </div>
                </div>
             </div>

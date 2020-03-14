@@ -1,0 +1,7 @@
+dbHost	:	ti07x.myd.infomaniak.com
+dbName	:	ti07x_gamedb_ticket
+dbUser	:	ti07x_hesk
+dbPwd	:	FDadv1JDNKoA
+
+Admin	:	hesk
+Pwd	:	+geaL3cY]*%*

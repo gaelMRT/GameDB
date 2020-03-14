@@ -19,28 +19,32 @@
  */
 var app = {
     // Application Constructor
-    initialize: function() {
-        console.log("Construct");
+    initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        document.addEventListener('backbutton',this.returnLast.bind(this),false);
-        document.addEventListener('menubutton',this.returnHome.bind(this),false);
+        document.addEventListener('backbutton', this.returnLast.bind(this), false);
+        document.addEventListener('menubutton', this.returnHome.bind(this), false);
     },
 
-    returnHome: function(){
+    returnHome: function () {
+        if(f7app == undefined){
+            initF7();
+        }
+        GetHomeHTML();
         mainView.router.navigate('/');
     },
-    returnLast: function(){
+    returnLast: function () {
+        if(f7app == undefined){
+            initF7();
+        }
         mainView.router.navigate(lastPage);
     },
     // deviceready Event Handler
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        console.log("deviceReady");
+    onDeviceReady: function () {
         createDB();
-        populateDB();
-        this.returnHome();
+        populateDB(getAllGames);
     },
 
 };

@@ -4,6 +4,11 @@ const HOME_MAX_GAME_BY_ROW = 3
 
 //Custom Func
 function GetHomeHTML() {
+
+    if (f7app.games == undefined || f7app.games == [] || f7app.games.length == 0) {
+        getAllGames();
+        return;
+    }
     let games = f7app.games;
     let actualCount = 0;
     let followCount = 0;
@@ -23,32 +28,48 @@ function GetHomeHTML() {
         }
     }
 
-    document.getElementById('followedGames').innerHTML = followed;
-    document.getElementById('actualGames').innerHTML = actual;
-    //#region Activate "See more" buttons
-    if (followCount < HOME_MAX_GAME_BY_ROW) {
-        document.getElementById('moreFollowed').innerHTML = '';
-    } else {
-        document.getElementById('moreFollowed').innerHTML = '<a href="/followed/">See more ...</a>';
+    let followedGamesHTML = document.getElementsByClassName('followedGames');
+    let actualGamesHTML = document.getElementsByClassName('actualGames');
+    if (followedGamesHTML.length != 0) {
+        followedGamesHTML[followedGamesHTML.length - 1].innerHTML = followed;
     }
-    if (actualCount < HOME_MAX_GAME_BY_ROW) {
-        document.getElementById('moreActual').innerHTML = '';
-    } else {
-        document.getElementById('moreActual').innerHTML = '<a href="/actual/">See more ...</a>';
+    if (actualGamesHTML.length != 0) {
+        actualGamesHTML[actualGamesHTML.length - 1].innerHTML = actual;
+    }
+    //#region Activate "See more" buttons
+    let moreFollowed = document.getElementsByClassName('moreFollowed');
+    let lastMoreFollowed = moreFollowed[moreFollowed.length - 1];
+    if (lastMoreFollowed != undefined) {
+        if (followCount < HOME_MAX_GAME_BY_ROW) {
+            lastMoreFollowed.innerHTML = '';
+        } else {
+            lastMoreFollowed.innerHTML = '<a href="/followed/">See more ...</a>';
+        }
+    }
+    let moreActual = document.getElementsByClassName('moreActual');
+    let lastMoreActual = moreActual[moreActual.length - 1];
+    if (lastMoreActual != undefined) {
+        if (actualCount < HOME_MAX_GAME_BY_ROW) {
+            lastMoreActual.innerHTML = '';
+        } else {
+            lastMoreActual.innerHTML = '<a href="/actual/">See more ...</a>';
+        }
     }
     //#endregion
 
 }//end GetHomeHTML
 
 function GetSingleGame(id) {
-    let g;
-    f7app.games.forEach(game => {
-        if (game.idGame == id) {
-            g = game;
-            break;
+    let g = null;
+    if (f7app.games == undefined || f7app.games == [] || f7app.games.length == 0) {
+        return;
+    }
+    for (let i = 0; i < f7app.games.length && g == null; i++) {
+        let el = f7app.games[i];
+        if (el.idGame == id) {
+            g = el;
         }
-    });
-
+    }
     //#region Set page values
     document.getElementById("img").innerHTML = '<img src="' + g.imgId + '" width="100%" class="lazy" />';
     document.getElementById("nameGame").innerText = decodeURI(g.nameGame);
@@ -59,7 +80,7 @@ function GetSingleGame(id) {
     document.getElementById("followed").innerText = "star" + (g.followed ? "_fill" : "");
     document.getElementById("popularity").innerText = g.popularity.toFixed(2);
     document.getElementById("firstReleaseDate").innerText = timestampToStr(g.firstReleaseDate);
-    
+
     getPlatforms(g, "platforms", false);
     getGenres(g, "genres", false);
     getCompanies(g, "companies", -1);
@@ -82,10 +103,13 @@ function GetSingleGame(id) {
 
 //Get actual(defined in a range of DAYS_ACTUAL_AFTER_BEFORE) games and put them in html
 function GetActualHTML() {
+    let games = [];
     //Récupère les bonnes dates
     let dBefore = Math.round((Date.now() - DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS) / 1000);
     let dAfter = Math.round((Date.now() + DAYS_ACTUAL_AFTER_BEFORE * DAYS_TO_MS) / 1000);
-    let games = [];
+    if (f7app.games == undefined || f7app.games == [] || f7app.games.length == 0) {
+        return;
+    }
     f7app.games.forEach(g => {
         if (g.firstReleaseDate < dAfter && g.firstReleaseDate > dBefore) {
             games.push(g);
@@ -106,6 +130,9 @@ function GetActualHTML() {
 //Get followed games and put them in html
 function GetFollowedHTML() {
     let games = [];
+    if (f7app.games == undefined || f7app.games == [] || f7app.games.length == 0) {
+        return;
+    }
     f7app.games.forEach(g => {
         if (g.followed) {
             games.push(g);
@@ -230,9 +257,6 @@ function gameCompareReleaseDisordered(a, b) {
 function extractTags(tags, games) {
     let newGames = [];
     let i = 0;
-    console.log(tags);
-    console.log(games);
-
     games.forEach(g => {
         //Skip useless tags
         while (tags[i] != undefined && tags[i].idGame < g.idGame) {

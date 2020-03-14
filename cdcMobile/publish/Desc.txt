@@ -1,0 +1,3 @@
+An application to see all the games that will come out soon or that went out recently (one week).
+
+You can also follow the games to see them in a special favorite list.

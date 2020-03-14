@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.gaelmrt.gamedb" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.gaelmrt.gamedb" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>GameDb</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An application to see all the games that will come out soon or that went out recently (one week).
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="gael.mrt@eduge.ch" href="http://cordova.io">
+        Gael MRT
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -18,9 +18,28 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <icon density="ldpi" src="res/icons/Icon-36.png"/>
+        <icon density="mdpi" src="res/icons/Icon-48.png"/>
+        <icon density="hdpi" src="res/icons/Icon-72.png"/>
+        <icon density="xhdpi" src="res/icons/Icon-96.png"/>
+        <icon density="xxhdpi" src="res/icons/Icon-144.png"/>
+        <icon density="xxxhdpi" src="res/icons/Icon-192.png"/>
+        <splash src="res/splash/lpdi-port.png" density="port-lpdi"/>
+        <splash src="res/splash/lpdi-land.png" density="land-lpdi"/>
+        <splash src="res/splash/mpdi-port.png" density="port-mpdi"/>
+        <splash src="res/splash/mpdi-land.png" density="land-mpdi"/>
+        <splash src="res/splash/hpdi-port.png" density="port-hpdi"/>
+        <splash src="res/splash/hpdi-land.png" density="land-hpdi"/>
+        <splash src="res/splash/xhpdi-port.png" density="port-xhpdi"/>
+        <splash src="res/splash/xhpdi-land.png" density="land-xhpdi"/>
+        <splash src="res/splash/xxhpdi-port.png" density="port-xxhpdi"/>
+        <splash src="res/splash/xxhpdi-land.png" density="land-xxhpdi"/>
+        <splash src="res/splash/xxxhpdi-port.png" density="port-xxxhpdi"/>
+        <splash src="res/splash/xxxhpdi-land.png" density="land-xxxhpdi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <icon src="res/icons/Icon-1024_opaque.png" height="1024" width="1024"/>
 </widget>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.gaelmrt.gamedb" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.gaelmrt.gamedb" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
@@ -9,10 +9,10 @@
     </feature>
     <name>GameDb</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An application to see all the games that will come out soon or that went out recently (one week).
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="gael.mrt@eduge.ch" href="http://cordova.io">
+        Gael MRT
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -22,6 +22,13 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <icon height="1024" src="res/icons/Icon-1024_opaque.png" width="1024" />
     <allow-intent href="market:*" />
+    <icon density="ldpi" src="res/icons/Icon-36.png" />
+    <icon density="mdpi" src="res/icons/Icon-48.png" />
+    <icon density="hdpi" src="res/icons/Icon-72.png" />
+    <icon density="xhdpi" src="res/icons/Icon-96.png" />
+    <icon density="xxhdpi" src="res/icons/Icon-144.png" />
+    <icon density="xxxhdpi" src="res/icons/Icon-192.png" />
     <preference name="loglevel" value="DEBUG" />
 </widget>

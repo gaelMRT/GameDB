@@ -20,20 +20,17 @@ function createDB() {
     }, errorCallback);//end db transaction
 }
 
-function populateDB() {
+function populateDB(callback) {
     let needPopulate = false;
     db.transaction(function (tx) {
         tx.executeSql("SELECT * FROM TLastUpdated WHERE tableName == 'TGames';", null, function (tx, results) {
-            console.log(results);
             if (results.rows.length == 0) {
                 needPopulate = true;
-                console.log("Update because no games");
             } else {
                 let lastUpdate;
                 lastUpdate = results.rows.item(0);
                 if (Date.now() - lastUpdate.lastUpdated >= HOURS_BEFORE_CONNECTED_UPDATE * HOURS_TO_MS) {
                     needPopulate = true;
-                    console.log("Update because time");
                 }
             }
         }, errorCallback)
@@ -84,6 +81,7 @@ function populateDB() {
                 }).then(insertResp);//end fetch
             }
         }
+        callback();
     });
 }
 
@@ -173,17 +171,20 @@ function insertResp(response) {
 //get All games
 function getAllGames() {
     let sql = "SELECT * FROM TGames ORDER BY idGame ASC;";
+    let games = [];
     db.transaction(function (tx) {
         tx.executeSql(sql, [], function (tx, results) {
             getTags(tx, function (tags) {
-                let games = [];
                 for (let i = 0; i < results.rows.length; i++) {
                     games.push(results.rows.item(i));
                 }
-                f7app.games = extractTags(tags, games);
+                games = extractTags(tags, games);
             });
         }, errorCallback);
-    }, errorCallback);
+    }, errorCallback , function(){
+        f7app.games = games;
+        app.returnHome();
+    });
 }
 
 
@@ -208,7 +209,6 @@ function getSingleGameTags(tx, id, callback) {
         for (let i = 0; i < results.rows.length; i++) {
             resultList.push(results.rows.item(i));
         }
-        console.log(results);
         callback(resultList);
     }, errorCallback);
 }

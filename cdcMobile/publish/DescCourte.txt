@@ -1,0 +1,1 @@
+An application to see all the games that will come out soon or that went out recently (one week).
