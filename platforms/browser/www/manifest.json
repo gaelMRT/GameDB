@@ -4,9 +4,15 @@
   "name": "GameDb",
   "short_name": "GameDb",
   "version": "net.gaelmrt.gamedb",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
-  "author": "Apache Cordova Team",
-  "icons": [],
+  "description": "An application to see all the games that will come out soon or that went out recently (one week).",
+  "author": "Gael MRT",
+  "icons": [
+    {
+      "src": "res/icons/Icon-1024_opaque.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    }
+  ],
   "start_url": "index.html",
   "theme_color": "#007aff"
 }

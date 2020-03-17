@@ -1,1 +1,1 @@
-{"plugins":["cordova-plugin-whitelist","cordova-plugin-device"]}
+{"plugins":["cordova-plugin-whitelist","cordova-plugin-device","cordova-plugin-splashscreen"]}

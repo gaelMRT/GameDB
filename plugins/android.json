@@ -12,6 +12,9 @@
     },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "net.gaelmrt.gamedb"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "net.gaelmrt.gamedb"
     }
   },
   "dependent_plugins": {}

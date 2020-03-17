@@ -24,18 +24,18 @@
         <icon density="xhdpi" src="res/icons/Icon-96.png"/>
         <icon density="xxhdpi" src="res/icons/Icon-144.png"/>
         <icon density="xxxhdpi" src="res/icons/Icon-192.png"/>
-        <splash src="res/splash/lpdi-port.png" density="port-lpdi"/>
-        <splash src="res/splash/lpdi-land.png" density="land-lpdi"/>
-        <splash src="res/splash/mpdi-port.png" density="port-mpdi"/>
-        <splash src="res/splash/mpdi-land.png" density="land-mpdi"/>
-        <splash src="res/splash/hpdi-port.png" density="port-hpdi"/>
-        <splash src="res/splash/hpdi-land.png" density="land-hpdi"/>
-        <splash src="res/splash/xhpdi-port.png" density="port-xhpdi"/>
-        <splash src="res/splash/xhpdi-land.png" density="land-xhpdi"/>
-        <splash src="res/splash/xxhpdi-port.png" density="port-xxhpdi"/>
-        <splash src="res/splash/xxhpdi-land.png" density="land-xxhpdi"/>
-        <splash src="res/splash/xxxhpdi-port.png" density="port-xxxhpdi"/>
-        <splash src="res/splash/xxxhpdi-land.png" density="land-xxxhpdi"/>
+        <splash src="res/splash/ldpi-port.png" density="port-ldpi"/>
+        <splash src="res/splash/ldpi-land.png" density="land-ldpi"/>
+        <splash src="res/splash/mdpi-port.png" density="port-mdpi"/>
+        <splash src="res/splash/mdpi-land.png" density="land-mdpi"/>
+        <splash src="res/splash/hdpi-port.png" density="port-hdpi"/>
+        <splash src="res/splash/hdpi-land.png" density="land-hdpi"/>
+        <splash src="res/splash/xhdpi-port.png" density="port-xhdpi"/>
+        <splash src="res/splash/xhdpi-land.png" density="land-xhdpi"/>
+        <splash src="res/splash/xxhdpi-port.png" density="port-xxhdpi"/>
+        <splash src="res/splash/xxhdpi-land.png" density="land-xxhdpi"/>
+        <splash src="res/splash/xxxhdpi-port.png" density="port-xxxhdpi"/>
+        <splash src="res/splash/xxxhdpi-land.png" density="land-xxxhdpi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

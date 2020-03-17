@@ -183,8 +183,6 @@ function getAllGames() {
         }, errorCallback);
     }, errorCallback , function(){
         f7app.games = games;
-        console.log("E.T. Retour Maison");
-        console.log(f7app.games.length);
         app.returnHome();
     });
 }

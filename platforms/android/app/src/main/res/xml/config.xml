@@ -7,6 +7,10 @@
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
     <name>GameDb</name>
     <description>
         An application to see all the games that will come out soon or that went out recently (one week).
@@ -30,5 +34,17 @@
     <icon density="xhdpi" src="res/icons/Icon-96.png" />
     <icon density="xxhdpi" src="res/icons/Icon-144.png" />
     <icon density="xxxhdpi" src="res/icons/Icon-192.png" />
+    <splash density="port-ldpi" src="res/splash/ldpi-port.png" />
+    <splash density="land-ldpi" src="res/splash/ldpi-land.png" />
+    <splash density="port-mdpi" src="res/splash/mdpi-port.png" />
+    <splash density="land-mdpi" src="res/splash/mdpi-land.png" />
+    <splash density="port-hdpi" src="res/splash/hdpi-port.png" />
+    <splash density="land-hdpi" src="res/splash/hdpi-land.png" />
+    <splash density="port-xhdpi" src="res/splash/xhdpi-port.png" />
+    <splash density="land-xhdpi" src="res/splash/xhdpi-land.png" />
+    <splash density="port-xxhdpi" src="res/splash/xxhdpi-port.png" />
+    <splash density="land-xxhdpi" src="res/splash/xxhdpi-land.png" />
+    <splash density="port-xxxhdpi" src="res/splash/xxxhdpi-port.png" />
+    <splash density="land-xxxhdpi" src="res/splash/xxxhdpi-land.png" />
     <preference name="loglevel" value="DEBUG" />
 </widget>

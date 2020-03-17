@@ -5,9 +5,7 @@ const HOME_MAX_GAME_BY_ROW = 3
 //Custom Func
 function GetHomeHTML() {
 
-    console.log("HTML");
     if (f7app.games == undefined || f7app.games == [] || f7app.games.length == 0) {
-        console.log("GetGames");
         getAllGames();
         return;
     }

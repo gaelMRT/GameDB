@@ -59,7 +59,8 @@ var f7app = new Framework7({
             on: {
                 pageAfterIn: function (e, page) {
                     if(f7app.games != []){
-                        GetActualHTML();
+                        console.log(page.route.params.id);
+                        GetSingleGame(page.route.params.id);
                     }
                     document.getElementById("backLink").href = lastPage;
                 }
